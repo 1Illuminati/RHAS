@@ -1,0 +1,4 @@
+name: RHAS
+version: '${project.version}'
+main: org.red.has.RHAS
+api-version: 1.19

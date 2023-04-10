@@ -11,6 +11,7 @@ import org.red.has.skill.AbstractSkill;
 import org.red.library.entity.player.NewPlayer;
 import org.red.library.invetory.CustomInventory;
 import org.red.library.item.ItemBuilder;
+import org.red.library.util.map.CoolTime;
 
 import java.util.UUID;
 
@@ -28,6 +29,18 @@ public class MedicalBagS extends AbstractSkill {
     @Override
     public String skillMessage() {
         return null;
+    }
+
+    @Override
+    public void skill(NewPlayer player) {
+        CoolTime coolTime = player.getCoolTime();
+
+        if (!coolTime.checkCoolTime(code())) {
+            player.sendMessage("쿨타임 : " + coolTime.getCoolTime(code()));
+            return;
+        }
+
+        onSkill(player);
     }
 
     @Override
@@ -59,6 +72,7 @@ public class MedicalBagS extends AbstractSkill {
                 this.setButton(i++, event -> {
                     game.revivePlayer(player);
                     event.getWhoClicked().closeInventory();
+                    NewPlayer.getNewPlayer(player).getCoolTime().setCoolTime("medical_bag", 240, CoolTime.TimeType.SECOND);
                 });
             }
         }

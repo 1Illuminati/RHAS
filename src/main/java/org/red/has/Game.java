@@ -231,7 +231,7 @@ public class Game implements Runnable {
             throw new IllegalStateException("Game is already started");
         }
 
-        if (this.joinPlayer.size() < 0) {
+        if (this.joinPlayer.size() < 2) {
             sendMessage("§c인원이 부족하여 게임이 취소되었습니다.", joinPlayer);
             return;
         }

@@ -18,7 +18,7 @@ public class InvincibleS extends AbstractSkill {
 
     @Override
     public String skillMessage() {
-        return "무적 사용! 6초간 무적이 됩니다!";
+        return "스킬 사용! 6초간 무적이 됩니다!";
     }
 
     @Override

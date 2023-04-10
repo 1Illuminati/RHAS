@@ -18,7 +18,7 @@ public class InvisibleS extends AbstractSkill {
 
     @Override
     public String skillMessage() {
-        return "투명 사용! 20초간 투명해집니다!";
+        return "스킬 사용! 20초간 투명해집니다!";
     }
 
     @Override

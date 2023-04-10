@@ -147,7 +147,7 @@ public class GameItems {
                 "§7 ㅋ")).build();
 
         BET = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(7).setDisplayName("§f밀치기").setLore(Arrays.asList(
-                "§f 우클릭, 쿨타임 : 30초",
+                "§f 우클릭, 쿨타임 : 20초",
                 "§7  > 3초간 아이템에 밀치기 X 인챈트가 부여됩니다.",
                 "",
                 "§7 홈런~! 볼")).build();

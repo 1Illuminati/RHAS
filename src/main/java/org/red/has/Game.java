@@ -8,7 +8,10 @@ import org.bukkit.boss.BarFlag;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.KeyedBossBar;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.BoundingBox;
+import org.red.library.RedKillerLibrary;
 import org.red.library.util.async.Scheduler;
 import org.red.library.world.WorldData;
 import org.red.library.world.area.Area;
@@ -147,12 +150,18 @@ public class Game implements Runnable {
 
     public void clear() {
         WorldData worldData = WorldData.getWorldData(this.spawn.getWorld());
+        this.joinPlayer.forEach(uuid -> {
+            Player player = Bukkit.getPlayer(uuid);
+            player.getInventory().clear();
+            player.getActivePotionEffects().clear();
+        });
         worldData.removeArea(area);
         this.joinPlayer.clear();
         this.specterPlayer.clear();;
         this.deadPlayer.clear();
         this.survivePlayer.clear();
         this.isStarted = false;
+        this.timer = null;
     }
 
     public Area getArea() {
@@ -177,8 +186,10 @@ public class Game implements Runnable {
         this.survivePlayer.remove(uuid);
         this.deadPlayer.add(uuid);
 
+        this.sendMessage("§c" + player.getName() + "님이 죽었습니다!", this.survivePlayer);
+
         if (survivePlayer.size() == 0) {
-            //살인마 승리 코드
+            this.victoryMurder();
         }
     }
 
@@ -220,7 +231,7 @@ public class Game implements Runnable {
             throw new IllegalStateException("Game is already started");
         }
 
-        if (this.joinPlayer.size() < 3) {
+        if (this.joinPlayer.size() < 0) {
             sendMessage("§c인원이 부족하여 게임이 취소되었습니다.", joinPlayer);
             return;
         }
@@ -242,7 +253,7 @@ public class Game implements Runnable {
         worldData.registerArea(area);
 
         isStarted = true;
-        KeyedBossBar bar = Bukkit.createBossBar(new NamespacedKey(RHAS.getPlugin(), "timer"), "타이머", BarColor.RED, BarStyle.SOLID, BarFlag.CREATE_FOG, BarFlag.DARKEN_SKY);
+        KeyedBossBar bar = Bukkit.createBossBar(new NamespacedKey(RHAS.getPlugin(), "timer"), "Roll Or Die", BarColor.RED, BarStyle.SOLID, BarFlag.CREATE_FOG, BarFlag.DARKEN_SKY);
         this.timer = new Timer("GameTimer", bar, time);
 
         for (UUID uuid : joinPlayer) {
@@ -285,14 +296,44 @@ public class Game implements Runnable {
         Scheduler.delayScheduler(new Scheduler.RunnableEx() {
             @Override
             public void function() {
-                sendTitle("§c§l[ §f게임 시작! §c§l]", "§f15초뒤 능력과 살인마가 정해집니다!", joinPlayer);
+                sendTitle("§c§l[ §f게임 시작! §c§l]", "§f10초뒤 능력과 악마가 정해집니다!", joinPlayer);
+                KeyedBossBar bar = Bukkit.createBossBar(new NamespacedKey(RHAS.getPlugin(), "delay_timer"), "10초뒤 능력과 악마가 정해집니다!", BarColor.RED, BarStyle.SOLID, BarFlag.CREATE_FOG, BarFlag.DARKEN_SKY);
+                Timer delayTimer = new Timer("delay_timer", bar, 10);
                 Game.this.joinPlayer.forEach(uuid -> {
                     Player player = Bukkit.getPlayer(uuid);
                     player.teleport(Game.this.spawn);
                     player.setGameMode(GameMode.ADVENTURE);
+                    delayTimer.addPlayer(player);
                 });
+                delayTimer.start();
             }
         }, 80);
+
+        Scheduler.delayScheduler(new Scheduler.RunnableEx() {
+            @Override
+            public void function() {
+                sendTitle("§c§l[ §f당신은 인간 입니다 §c§l]", "§7지금부터 악마로부터 살아남으세요", survivePlayer);
+                sendTitle("§c§l[ §f당신은 §4악마 §f입니다 §c§l]", "§7지금부터 모든 인간들을 죽이세요", murderPlayer);
+                Game.this.survivePlayer.forEach(uuid -> {
+                    Player player = Bukkit.getPlayer(uuid);
+                    timer.addPlayer(player);
+                    player.getInventory().addItem(GameItems.RUNNER_WEAPON[new Random().nextInt(GameItems.RUNNER_WEAPON.length)]);
+                });
+                Game.this.murderPlayer.forEach(uuid -> {
+                    Player player = Bukkit.getPlayer(uuid);
+                    timer.addPlayer(player);
+                    player.getInventory().addItem(GameItems.MURDER_WEAPON[new Random().nextInt(GameItems.MURDER_WEAPON.length)]);
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 100, 5));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 100, 130));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 100, 5));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 100, 5));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 100, 5));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 100000, 4));
+                });
+
+                timer.start();
+            }
+        }, 280);
     }
 
     private static class GameArea implements Area {

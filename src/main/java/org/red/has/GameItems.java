@@ -6,6 +6,7 @@ import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.red.library.item.ItemBuilder;
+import org.red.library.item.event.EventItemManager;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -18,15 +19,18 @@ public class GameItems {
 
     public static final ItemStack MEDICAL_BAG;
     public static final ItemStack ARTIFICIAL_EYE_OF_GOD;
-    public static final ItemStack COCAINE;
-    public static final ItemStack NINJA_BOOK;
-    public static final ItemStack INVINCIBLE_SHIELD;
+    public static final ItemStack STIM_PACK;
+    public static final ItemStack INVISIBLE;
+    public static final ItemStack INVINCIBLE;
     public static final ItemStack KOREA_MAN;
     public static final ItemStack BET;
     public static final ItemStack BLINDFOLD;
     public static final ItemStack LOCATION_CHANGE;
     public static final ItemStack SLEEP_GUN;
     public static final ItemStack ISIS;
+    public static final ItemStack HEALTH_POTION;
+    public static final ItemStack POCKET_WATCH;
+    public static final ItemStack TRAP;
 
     public static final ItemStack LOC_HELPER;
 
@@ -110,28 +114,29 @@ public class GameItems {
                 "§7   > 죽은 도망자중 한명을 되살립니다.",
                 "",
                 "§7 죽은자는 말이 많다")).build();
+        EventItemManager.setItemInEvent(MEDICAL_BAG, "medical_bag");
 
         ARTIFICIAL_EYE_OF_GOD = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(2).setDisplayName("§f천리안").setLore(Arrays.asList(
-                "§f 우클릭, 쿨타임 : 30초",
+                "§f 우클릭, 쿨타임 : 25초",
                 "§7   > 15초간 악마에게 발광을 부여합니다.",
                 "",
                 "§7 어째서인지 내가 능력을 쓰면 남들도 보인다.")).build();
 
-        COCAINE = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(3).setDisplayName("§f아드레날린").setLore(Arrays.asList(
+        STIM_PACK = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(3).setDisplayName("§스팀팩").setLore(Arrays.asList(
                 "§f 우클릭, 쿨타임 : 30초",
-                "§7   > 7초간 신속 II를 받습니다.",
+                "§7   > 10초간 신속 II를 받습니다.",
                 "",
                 "§7 우리 마린 영양 간식")).build();
 
-        NINJA_BOOK = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(4).setDisplayName("§f투명화").setLore(Arrays.asList(
+        INVISIBLE = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(4).setDisplayName("§f투명화").setLore(Arrays.asList(
                 "§f 우클릭, 쿨타임 : 50초",
                 "§7   > 20초간 투명화를 받습니다.",
                 "",
                 "§7 내가 사라져볼게 얍!")).build();
 
-        INVINCIBLE_SHIELD = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(5).setDisplayName("§f무적").setLore(Arrays.asList(
-                "§f 우클릭, 쿨타임 : 20초",
-                "§7   > 8초간 저항 V를 받습니다.",
+        INVINCIBLE = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(5).setDisplayName("§f무적").setLore(Arrays.asList(
+                "§f 우클릭, 쿨타임 : 10초",
+                "§7   > 6초간 저항 V를 받습니다.",
                 "",
                 "§  안 아파~ 하나도 안 아파~")).build();
 
@@ -154,27 +159,48 @@ public class GameItems {
                 "§7 ^오^")).build();
 
         LOCATION_CHANGE = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(9).setDisplayName("§f위치바꾸기").setLore(Arrays.asList(
-                "§f 우클릭, 쿨타임 : 60초",
+                "§f 우클릭, 쿨타임 : 50초",
                 "§7   > 살인마와 위치를 바꿉니다.",
                 "",
                 "§7 체인지!")).build();
 
         SLEEP_GUN = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(10).setDisplayName("§f수면총").setLore(Arrays.asList(
-                "§f 우클릭, 쿨타임 : 50초",
+                "§f 우클릭, 쿨타임 : 20초",
                 "§7  > 전방으로 눈덩이를 발사합니다. 피격시",
-                "§7    피격당한 엔티티에게 5초간 구속 3를 줍니다.",
+                "§7    피격당한 엔티티에게 5초간 구속 5를 줍니다.",
                 "",
                 "§7 더이상 아이디어가 안떠오른다.")).build();
 
         ISIS = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(11).setDisplayName("§fISIS").setLore(Arrays.asList(
-                "§f 알라후 아크바르 - 사망, 쿨타임 : X",
-                "§7  > 살인마에게 사망시 살인마에게 20초간 구속5, 발광을 부여합니다.",
+                "§f 사망, 쿨타임 : X",
+                "§7  > 살인마에게 사망시 살인마에게 30초간 구속5, 발광을 부여합니다.",
                 "",
-                "§7 알라를 위하여!")).build();
+                "§7 알라후 아크바르!")).build();
 
-        RUNNER_WEAPON = new ItemStack[]{MEDICAL_BAG, ARTIFICIAL_EYE_OF_GOD, COCAINE, NINJA_BOOK,
-                INVINCIBLE_SHIELD, KOREA_MAN, BET, BLINDFOLD, LOCATION_CHANGE, ISIS, SLEEP_GUN};
+        HEALTH_POTION = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(12).setDisplayName("§f건강").setLore(Arrays.asList(
+                "§f 패시브, 쿨타임 : X",
+                "§7  > 영구적으로 재생 III를 부여받습니다.",
+                "",
+                "§7 살아남기만 하면 된다. 어케든")).build();
+
+        POCKET_WATCH = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(13).setDisplayName("§f회중시계").setLore(Arrays.asList(
+                "§f 우클릭, 쿨타임 : 80초",
+                "§7  > 남은 시간이 10% 감소합니다.",
+                "",
+                "§7 줄어드는 시간")).build();
+
+        TRAP = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(14).setDisplayName("§f함정").setLore(Arrays.asList(
+                "§f 우클릭, 쿨타임 : 30초",
+                "§7  > 현재 위치에 함정을 설치합니다. (최대 10개 까지 동시 설치)",
+                "§7    함정을 밟은 악마는 10초간 구속 5에 걸립니다.",
+                "",
+                "§7 줄어드는 시간")).build();
+
+
+        RUNNER_WEAPON = new ItemStack[]{MEDICAL_BAG, ARTIFICIAL_EYE_OF_GOD, STIM_PACK, INVISIBLE,
+                INVINCIBLE, KOREA_MAN, BET, BLINDFOLD, LOCATION_CHANGE, ISIS, SLEEP_GUN, HEALTH_POTION, POCKET_WATCH, TRAP};
 
         LOC_HELPER = new ItemBuilder(Material.DIAMOND_AXE).setDisplayName("§fLocation Set Up Helper").setLore(Collections.singletonList("§f이 아이템은 게임의 플레이를 지원하기 위해 제작되었습니다.")).build();
+        EventItemManager.setItemInEvent(LOC_HELPER, "locHelper");
     }
 }

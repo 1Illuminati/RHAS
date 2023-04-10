@@ -2,3 +2,9 @@ name: RHAS
 version: '${project.version}'
 main: org.red.has.RHAS
 api-version: 1.19
+
+commands:
+  game:
+    description: Start a game of RHAS
+    usage: /game <start|stop|join|leave|list>
+    aliases: [g]

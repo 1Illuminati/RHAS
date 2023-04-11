@@ -2,11 +2,9 @@ package org.red.has.skill.runner;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
+import org.bukkit.Location;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.SkullMeta;
 import org.red.has.Game;
 import org.red.has.Util;
 import org.red.has.skill.AbstractSkill;
@@ -17,15 +15,15 @@ import org.red.library.util.map.CoolTime;
 
 import java.util.UUID;
 
-public class MedicalBagS extends AbstractSkill {
+public class LocationChangeS extends AbstractSkill {
     @Override
     public int coolTime() {
-        return 240;
+        return 50;
     }
 
     @Override
     public String code() {
-        return "medical_bag";
+        return "location_change";
     }
 
     @Override
@@ -35,26 +33,32 @@ public class MedicalBagS extends AbstractSkill {
 
     @Override
     protected boolean onSkill(NewPlayer player) {
-        player.openInventory(new MedicalBagInv(Game.getGame()));
+        player.openInventory(new LocationChangeInv(Game.getGame()));
         return false;
     }
 
-    private static class MedicalBagInv extends CustomInventory {
+    private static class LocationChangeInv extends CustomInventory {
 
-        public MedicalBagInv(Game game) {
-            super("살리고 싶은 사람을 누르세요!", 27);
+        public LocationChangeInv(Game game) {
+            super("누구랑 위치를 바꿔볼까", 27);
 
             int i = 0;
-            for (UUID uuid : game.getDeadPlayer()) {
+            for (UUID uuid : game.getJoinPlayer()) {
+
+                if (game.getDeadPlayer().contains(uuid))
+                    continue;
+
                 Player player = Bukkit.getPlayer(uuid);
                 this.setItem(i, new ItemBuilder(Util.getPlayerSkull(player)).setDisplayName(ChatColor.WHITE + player.getName()).build());
                 this.setButton(i++, event -> {
                     HumanEntity humanEntity = event.getWhoClicked();
-                    game.revivePlayer(player);
                     humanEntity.closeInventory();
-                    NewPlayer.getNewPlayer(player).getCoolTime().setCoolTime("medical_bag", 240, CoolTime.TimeType.SECOND);
-                    humanEntity.sendMessage(ChatColor.GREEN + "성공적으로 살려냈습니다!");
-                    player.sendMessage(ChatColor.GREEN + "누군가가 당신을 치료에 성공하였습니다!");
+                    Location temp = humanEntity.getLocation();
+                    humanEntity.teleport(player.getLocation());
+                    player.teleport(temp);
+                    player.sendMessage(ChatColor.RED + "누군가와 위치가 바꼇습니다!");
+                    humanEntity.sendMessage(ChatColor.GREEN + "위치 변경 성공!");
+                    NewPlayer.getNewPlayer(player).getCoolTime().setCoolTime("location_change", 50, CoolTime.TimeType.SECOND);
                 });
             }
         }

@@ -5,6 +5,7 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.red.has.item.runner.*;
 import org.red.library.item.ItemBuilder;
 import org.red.library.item.event.EventItemManager;
 
@@ -114,31 +115,35 @@ public class GameItems {
                 "§7   > 죽은 도망자중 한명을 되살립니다.",
                 "",
                 "§7 죽은자는 말이 많다")).build();
-        EventItemManager.setItemInEvent(MEDICAL_BAG, "medical_bag");
+        EventItemManager.setItemInEvent(MEDICAL_BAG, new MedicalBagI());
 
         ARTIFICIAL_EYE_OF_GOD = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(2).setDisplayName("§f천리안").setLore(Arrays.asList(
                 "§f 우클릭, 쿨타임 : 25초",
                 "§7   > 15초간 악마에게 발광을 부여합니다.",
                 "",
                 "§7 어째서인지 내가 능력을 쓰면 남들도 보인다.")).build();
+        EventItemManager.setItemInEvent(ARTIFICIAL_EYE_OF_GOD, new ArtificialEyeOfGodI());
 
         STIM_PACK = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(3).setDisplayName("§스팀팩").setLore(Arrays.asList(
                 "§f 우클릭, 쿨타임 : 30초",
                 "§7   > 10초간 신속 II를 받습니다.",
                 "",
                 "§7 우리 마린 영양 간식")).build();
+        EventItemManager.setItemInEvent(STIM_PACK, new StimPackI());
 
         INVISIBLE = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(4).setDisplayName("§f투명화").setLore(Arrays.asList(
                 "§f 우클릭, 쿨타임 : 50초",
                 "§7   > 20초간 투명화를 받습니다.",
                 "",
                 "§7 내가 사라져볼게 얍!")).build();
+        EventItemManager.setItemInEvent(INVISIBLE, new InvisibleI());
 
         INVINCIBLE = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(5).setDisplayName("§f무적").setLore(Arrays.asList(
                 "§f 우클릭, 쿨타임 : 10초",
                 "§7   > 6초간 저항 V를 받습니다.",
                 "",
                 "§  안 아파~ 하나도 안 아파~")).build();
+        EventItemManager.setItemInEvent(INVINCIBLE, new InvincibleI());
 
         KOREA_MAN = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(6).setDisplayName("§f무능력").setLore(Arrays.asList(
                 "§f 우클릭, 쿨타임 : ㅋ초",
@@ -151,6 +156,7 @@ public class GameItems {
                 "§7  > 3초간 아이템에 밀치기 X 인챈트가 부여됩니다.",
                 "",
                 "§7 홈런~! 볼")).build();
+        EventItemManager.setItemInEvent(BET, new BetI());
 
         BLINDFOLD = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(8).setDisplayName("§f실명").setLore(Arrays.asList(
                 "§f 우클릭, 쿨타임 : 30초",
@@ -160,7 +166,7 @@ public class GameItems {
 
         LOCATION_CHANGE = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(9).setDisplayName("§f위치바꾸기").setLore(Arrays.asList(
                 "§f 우클릭, 쿨타임 : 50초",
-                "§7   > 살인마와 위치를 바꿉니다.",
+                "§7   > 위치를 바꿔보죠?",
                 "",
                 "§7 체인지!")).build();
 

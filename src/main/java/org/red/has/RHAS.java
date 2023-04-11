@@ -11,10 +11,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.red.has.item.LocHelper;
 import org.red.library.event.TimerEndEvent;
 import org.red.library.event.area.player.AreaPlayerMoveEvent;
-import org.red.library.item.event.EventItemManager;
 import org.red.library.world.timer.Timer;
 
 import java.util.Iterator;
@@ -33,7 +31,6 @@ public final class RHAS extends JavaPlugin implements Listener {
         plugin = this;
         Bukkit.getPluginManager().registerEvents(this, this);
         this.getCommand("game").setExecutor(this);
-        EventItemManager.registerItemEvent(new LocHelper());
     }
 
     @Override
@@ -71,9 +68,6 @@ public final class RHAS extends JavaPlugin implements Listener {
 
         Player player = event.getEntity();
         Player killer = player.getKiller();
-
-        if (killer != null)
-            return;
 
         if (game.getSurvivePlayer().contains(player.getUniqueId()) && game.getMurderPlayer().contains(killer.getUniqueId())) {
             game.killPlayer(player);
@@ -146,6 +140,9 @@ public final class RHAS extends JavaPlugin implements Listener {
             break;
             case "murderNum":
                 game.setMurderNum(Integer.parseInt(args[1]));
+            break;
+            case "rw":
+                player.getInventory().addItem(GameItems.RUNNER_WEAPON);
             break;
             default:
                 sender.sendMessage("§a존재하지 않는 명령어 입니다.");

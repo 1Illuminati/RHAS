@@ -11,7 +11,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.BoundingBox;
-import org.red.library.RedKillerLibrary;
 import org.red.library.util.async.Scheduler;
 import org.red.library.world.WorldData;
 import org.red.library.world.area.Area;

@@ -5,6 +5,7 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.red.has.item.LocHelper;
 import org.red.has.item.runner.*;
 import org.red.library.item.ItemBuilder;
 import org.red.library.item.event.EventItemManager;
@@ -163,12 +164,14 @@ public class GameItems {
                 "§7   > 전방으로 독침을 발사합니다. 적중시 10초간 실명을 부여합니다.",
                 "",
                 "§7 ^오^")).build();
+        EventItemManager.setItemInEvent(BLINDFOLD, new BlindFoldI());
 
         LOCATION_CHANGE = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(9).setDisplayName("§f위치바꾸기").setLore(Arrays.asList(
                 "§f 우클릭, 쿨타임 : 50초",
                 "§7   > 위치를 바꿔보죠?",
                 "",
                 "§7 체인지!")).build();
+        EventItemManager.setItemInEvent(LOCATION_CHANGE, new LocationChangeI());
 
         SLEEP_GUN = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(10).setDisplayName("§f수면총").setLore(Arrays.asList(
                 "§f 우클릭, 쿨타임 : 20초",
@@ -207,6 +210,6 @@ public class GameItems {
                 INVINCIBLE, KOREA_MAN, BET, BLINDFOLD, LOCATION_CHANGE, ISIS, SLEEP_GUN, HEALTH_POTION, POCKET_WATCH, TRAP};
 
         LOC_HELPER = new ItemBuilder(Material.DIAMOND_AXE).setDisplayName("§fLocation Set Up Helper").setLore(Collections.singletonList("§f이 아이템은 게임의 플레이를 지원하기 위해 제작되었습니다.")).build();
-        EventItemManager.setItemInEvent(LOC_HELPER, "locHelper");
+        EventItemManager.setItemInEvent(LOC_HELPER, new LocHelper());
     }
 }

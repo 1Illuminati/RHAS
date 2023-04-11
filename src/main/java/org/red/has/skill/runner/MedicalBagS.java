@@ -49,6 +49,7 @@ public class MedicalBagS extends AbstractSkill {
                 Player player = Bukkit.getPlayer(uuid);
                 this.setItem(i, new ItemBuilder(Util.getPlayerSkull(player)).setDisplayName(ChatColor.WHITE + player.getName()).build());
                 this.setButton(i++, event -> {
+                    event.setCancelled(true);
                     HumanEntity humanEntity = event.getWhoClicked();
                     game.revivePlayer(player);
                     humanEntity.closeInventory();

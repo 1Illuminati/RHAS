@@ -33,14 +33,14 @@ public class LocationChangeS extends AbstractSkill {
 
     @Override
     protected boolean onSkill(NewPlayer player) {
-        player.openInventory(new LocationChangeInv(Game.getGame()));
+        player.openInventory(new LocationChangeInv(Game.getGame()).getInventory());
         return false;
     }
 
     private static class LocationChangeInv extends CustomInventory {
 
         public LocationChangeInv(Game game) {
-            super("누구랑 위치를 바꿔볼까", 27);
+            super(27, "누구랑 위치를 바꿔볼까");
 
             int i = 0;
             for (UUID uuid : game.getJoinPlayer()) {

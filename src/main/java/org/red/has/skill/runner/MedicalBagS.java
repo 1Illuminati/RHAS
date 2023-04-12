@@ -35,14 +35,14 @@ public class MedicalBagS extends AbstractSkill {
 
     @Override
     protected boolean onSkill(NewPlayer player) {
-        player.openInventory(new MedicalBagInv(Game.getGame()));
+        player.openInventory(new MedicalBagInv(Game.getGame()).getInventory());
         return false;
     }
 
     private static class MedicalBagInv extends CustomInventory {
 
         public MedicalBagInv(Game game) {
-            super("살리고 싶은 사람을 누르세요!", 27);
+            super(27, "살리고 싶은 사람을 누르세요!");
 
             int i = 0;
             for (UUID uuid : game.getDeadPlayer()) {

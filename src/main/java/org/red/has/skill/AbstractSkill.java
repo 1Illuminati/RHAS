@@ -21,7 +21,7 @@ public abstract class AbstractSkill {
         }
 
         if (!coolTime.checkCoolTime(code())) {
-            player.sendMessage("쿨타임 : " + coolTime.getCoolTime(code()));
+            player.sendMessage("쿨타임 : " + coolTime.getLessCoolTime(code()));
             return;
         }
 

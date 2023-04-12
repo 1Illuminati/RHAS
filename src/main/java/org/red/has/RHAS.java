@@ -71,6 +71,7 @@ public final class RHAS extends JavaPlugin implements Listener {
 
         if (game.getSurvivePlayer().contains(player.getUniqueId()) && game.getMurderPlayer().contains(killer.getUniqueId())) {
             game.killPlayer(player);
+            player.spigot().respawn();
         }
     }
 

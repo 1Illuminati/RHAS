@@ -1,5 +1,6 @@
 package org.red.has.item;
 
+import org.bukkit.Location;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.red.has.Game;
@@ -16,23 +17,26 @@ public class LocHelper implements EventItem {
     public void leftClickBlock(PlayerInteractEvent event) {
         event.setCancelled(true);
         Game game = Game.getGame();
-        game.setStart(event.getClickedBlock().getLocation());
-        event.getPlayer().sendMessage("Start set to " + event.getClickedBlock().getLocation());
+        Location location = event.getClickedBlock().getLocation().getBlock().getLocation();
+        game.setStart(location);
+        event.getPlayer().sendMessage(String.format("좌표 1 지정 완료 %d %d %d", location.getBlockX(), location.getBlockY(), location.getBlockZ()));
     }
 
     @EventItemAnnotation(act = EventItemAnnotation.Act.RIGHT_CLICK_BLOCK)
     public void rightClickBlock(PlayerInteractEvent event) {
         event.setCancelled(true);
         Game game = Game.getGame();
-        game.setEnd(event.getClickedBlock().getLocation());
-        event.getPlayer().sendMessage("End set to " + event.getClickedBlock().getLocation());
+        Location location = event.getClickedBlock().getLocation().getBlock().getLocation();
+        game.setEnd(location);
+        event.getPlayer().sendMessage(String.format("좌표 2 지정 완료 %d %d %d", location.getBlockX(), location.getBlockY(), location.getBlockZ()));
     }
 
     @EventItemAnnotation(act = EventItemAnnotation.Act.SWAP_HAND)
     public void dropItem(PlayerSwapHandItemsEvent event) {
         event.setCancelled(true);
         Game game = Game.getGame();
-        game.setSpawn(event.getPlayer().getLocation());
-        event.getPlayer().sendMessage("Spawn set to " + event.getPlayer().getLocation());
+        Location location = event.getPlayer().getLocation().getBlock().getLocation();
+        game.setSpawn(location);
+        event.getPlayer().sendMessage(String.format("스폰 지정 완료 %d %d %d", location.getBlockX(), location.getBlockY(), location.getBlockZ()));
     }
 }

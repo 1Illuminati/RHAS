@@ -6,6 +6,8 @@ import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.red.has.item.LocHelper;
+import org.red.has.item.murder.DoubleI;
+import org.red.has.item.murder.ShadowI;
 import org.red.has.item.runner.*;
 import org.red.library.item.ItemBuilder;
 import org.red.library.item.event.EventItemManager;
@@ -24,7 +26,7 @@ public class GameItems {
     public static final ItemStack STIM_PACK;
     public static final ItemStack INVISIBLE;
     public static final ItemStack INVINCIBLE;
-    public static final ItemStack KOREA_MAN;
+    public static final ItemStack NO_ABILITY;
     public static final ItemStack BET;
     public static final ItemStack BLINDFOLD;
     public static final ItemStack LOCATION_CHANGE;
@@ -73,6 +75,7 @@ public class GameItems {
                         "§7   > 인간을 공격시 40% 확률로 5초간 어둠을 부여합니다.",
                         "",
                         "§7 그는 그의 모든 것을 잃었고 분노 하였다.")).build();
+        EventItemManager.setItemInEvent(SHADOW, new ShadowI());
 
         GAMBLER = new ItemBuilder(Material.NETHERITE_SWORD).setUnbreakable(true).addItemFlags(ItemFlag.HIDE_UNBREAKABLE, ItemFlag.HIDE_ATTRIBUTES)
                 .setCustomModelData(3).setDisplayName("§e§l탐욕").addAttribute(Attribute.GENERIC_ATTACK_DAMAGE, 15, AttributeModifier.Operation.ADD_NUMBER)
@@ -105,11 +108,12 @@ public class GameItems {
                         "§7   > 모든 인간은 15초간 구속 V가 됩니다.",
                         "",
                         "§f 패시브",
-                        "§7   > 인간을 죽일시 증가하는 시간 증가량이 2배가 됩니다.",
+                        "§7   > 인간을 죽일시 감소하는 시간 감소량이 2배가 됩니다.",
                         "",
                         "§7 그의 나태함은 천천히 자기 자신을 갉아먹었다.")).build();
+        EventItemManager.setItemInEvent(DOUBLE, new DoubleI());
 
-        MURDER_WEAPON = new ItemStack[]{GAMBLER, SHADOW, RED_KILLER, DOUBLE};
+        MURDER_WEAPON = new ItemStack[]{SHADOW, DOUBLE};
 
         MEDICAL_BAG = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(1).setDisplayName("§f부활").setLore(Arrays.asList(
                 "§f 우클릭, 쿨타임 : 240초",
@@ -146,11 +150,12 @@ public class GameItems {
                 "§  안 아파~ 하나도 안 아파~")).build();
         EventItemManager.setItemInEvent(INVINCIBLE, new InvincibleI());
 
-        KOREA_MAN = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(6).setDisplayName("§f무능력").setLore(Arrays.asList(
+        NO_ABILITY = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(6).setDisplayName("§f무능력").setLore(Arrays.asList(
                 "§f 우클릭, 쿨타임 : ㅋ초",
                 "§7   > 놀랍게도 아무 일도 일어나지 않습니다.",
                 "",
                 "§7 ㅋ")).build();
+        EventItemManager.setItemInEvent(NO_ABILITY, new NoAbilityI());
 
         BET = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(7).setDisplayName("§f밀치기").setLore(Arrays.asList(
                 "§f 우클릭, 쿨타임 : 20초",
@@ -209,7 +214,7 @@ public class GameItems {
 
 
         RUNNER_WEAPON = new ItemStack[]{MEDICAL_BAG, ARTIFICIAL_EYE_OF_GOD, STIM_PACK, INVISIBLE,
-                INVINCIBLE, KOREA_MAN, BET, BLINDFOLD, LOCATION_CHANGE, SLEEP_GUN, HEALTH_POTION, POCKET_WATCH};
+                INVINCIBLE, NO_ABILITY, BET, BLINDFOLD, LOCATION_CHANGE, SLEEP_GUN, POCKET_WATCH};
 
         LOC_HELPER = new ItemBuilder(Material.DIAMOND_AXE).setDisplayName("§fLocation Set Up Helper").setLore(Collections.singletonList("§f이 아이템은 게임의 플레이를 지원하기 위해 제작되었습니다.")).build();
         EventItemManager.setItemInEvent(LOC_HELPER, new LocHelper());

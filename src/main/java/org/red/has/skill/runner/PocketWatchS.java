@@ -25,7 +25,7 @@ public class PocketWatchS extends AbstractSkill {
     protected boolean onSkill(NewPlayer player) {
         Game game = Game.getGame();
         Timer timer = game.getTimer();
-        timer.addTime(timer.getMaxTime() * -0.1);
+        timer.addTime(timer.getMaxTime() * 0.1);
         return true;
     }
 }

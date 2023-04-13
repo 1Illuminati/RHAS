@@ -39,7 +39,7 @@ public class Game implements Runnable {
     private final List<UUID> specterPlayer = new ArrayList<>();
     private final List<UUID> murderPlayer = new ArrayList<>();
     private boolean isStarted = false;
-    private int time = 300;
+    private int time = 240;
     private int murderNum = 1;
     private Location spawn;
     private Location start;
@@ -152,13 +152,18 @@ public class Game implements Runnable {
         this.joinPlayer.forEach(uuid -> {
             Player player = Bukkit.getPlayer(uuid);
             player.getInventory().clear();
-            player.getActivePotionEffects().clear();
+
+            for (PotionEffect effect : player.getActivePotionEffects()) {
+                player.removePotionEffect(effect.getType());
+            }
         });
         worldData.removeArea(area);
         this.specterPlayer.clear();;
         this.deadPlayer.clear();
         this.survivePlayer.clear();
+        this.murderPlayer.clear();
         this.isStarted = false;
+        this.timer.stop();
         this.timer = null;
     }
 
@@ -166,25 +171,33 @@ public class Game implements Runnable {
         return area;
     }
 
-    public void killPlayer(Player player) {
-        UUID uuid = player.getUniqueId();
+    public void killPlayer(Player runner, Player murder) {
+        UUID runnerUUID = runner.getUniqueId();
         if (!this.isStarted()) {
             throw new IllegalArgumentException("Game is not start");
         }
 
-        if (this.deadPlayer.contains(uuid)) {
-            throw new IllegalArgumentException(uuid + " is already dead");
+        if (this.deadPlayer.contains(runnerUUID)) {
+            throw new IllegalArgumentException(runnerUUID + " is already dead");
         }
 
-        if (this.specterPlayer.contains(uuid)) {
-            throw new IllegalArgumentException(uuid + " is specter");
+        if (this.specterPlayer.contains(runnerUUID)) {
+            throw new IllegalArgumentException(runnerUUID + " is specter");
         }
 
-        player.setGameMode(GameMode.SPECTATOR);
-        this.survivePlayer.remove(uuid);
-        this.deadPlayer.add(uuid);
+        runner.setGameMode(GameMode.SPECTATOR);
+        this.survivePlayer.remove(runnerUUID);
+        this.deadPlayer.add(runnerUUID);
 
-        this.sendMessage("§c" + player.getName() + "님이 죽었습니다!", this.survivePlayer);
+        this.sendMessage("§c" + runner.getName() + "님이 죽었습니다!", this.survivePlayer);
+
+        int decreaseTime = 30;
+
+        if (murder.getInventory().containsAtLeast(GameItems.DOUBLE, 1)) {
+            decreaseTime = 60;
+        }
+
+        this.timer.addTime(-decreaseTime);
 
         if (survivePlayer.size() == 0) {
             this.victoryMurder("모든 인간이 사망하였습니다!");

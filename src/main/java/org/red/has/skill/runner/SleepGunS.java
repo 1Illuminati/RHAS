@@ -1,6 +1,8 @@
 package org.red.has.skill.runner;
 
+import org.bukkit.Color;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -36,7 +38,10 @@ public class SleepGunS extends AbstractSkill {
         Scheduler.repeatDelayScheduler(new Scheduler.RunnableEx() {
             @Override
             public void function() {
-                for (LivingEntity livingEntity : Util.getTarget(loc.clone().add(line.get(this.getCount())), 1)) {
+                Location location = loc.clone().add(line.get(this.getCount()));
+                Particle.DustOptions dustOptions = new Particle.DustOptions(Color.BLACK, 1.0F);
+                player.spawnParticle(Particle.REDSTONE, location.clone().add(0, 1.5, 0), 2, dustOptions);
+                for (LivingEntity livingEntity : Util.getTarget(location, 1)) {
                     if (livingEntity.equals(player.getPlayer()))
                         continue;
 

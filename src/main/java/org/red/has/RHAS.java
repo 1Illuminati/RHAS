@@ -1,13 +1,17 @@
 package org.red.has;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Color;
+import org.bukkit.Particle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.boss.KeyedBossBar;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -66,15 +70,31 @@ public final class RHAS extends JavaPlugin implements Listener {
         if (!game.isStarted())
             return;
 
-        Player player = event.getEntity();
-        Player killer = player.getKiller();
+        Player runner = event.getEntity();
+        Player killer = runner.getKiller();
 
-        if (game.getSurvivePlayer().contains(player.getUniqueId()) && game.getMurderPlayer().contains(killer.getUniqueId())) {
-            game.killPlayer(player);
-            player.spigot().respawn();
-        } else if (game.getDeadPlayer().contains(player.getUniqueId())) {
+        if (killer == null)
+            return;
+
+        if (game.getSurvivePlayer().contains(runner.getUniqueId()) && game.getMurderPlayer().contains(killer.getUniqueId())) {
+            game.killPlayer(runner, killer);
+            runner.spigot().respawn();
+        } else if (game.getDeadPlayer().contains(runner.getUniqueId())) {
             game.victoryRunner("악마가 사망하였습니다!");
-            player.spigot().respawn();
+            runner.spigot().respawn();
+        }
+    }
+
+    @EventHandler
+    public void foodLevelChangeEvent(FoodLevelChangeEvent event) {
+        HumanEntity humanEntity = event.getEntity();
+        Game game = Game.getGame();
+
+        if (!game.isStarted())
+            return;
+
+        if (game.getJoinPlayer().contains(humanEntity.getUniqueId())) {
+            event.setCancelled(true);
         }
     }
 
@@ -146,7 +166,18 @@ public final class RHAS extends JavaPlugin implements Listener {
                 game.setMurderNum(Integer.parseInt(args[1]));
             break;
             case "rw":
+                if (!player.isOp())
+                    return false;
                 player.getInventory().addItem(GameItems.RUNNER_WEAPON);
+            break;
+            case "mw":
+                if (!player.isOp())
+                    return false;
+                player.getInventory().addItem(GameItems.MURDER_WEAPON);
+            break;
+            case "test":
+                Particle.DustOptions dustOptions = new Particle.DustOptions(Color.fromRGB(0, 127, 255), 1.0F);
+                player.spawnParticle(Particle.REDSTONE, player.getLocation(), 50, dustOptions);
             break;
             default:
                 sender.sendMessage("§a존재하지 않는 명령어 입니다.");

@@ -12,26 +12,26 @@ import org.red.library.util.async.Scheduler;
 
 import java.util.List;
 
-public class BlindFoldS extends AbstractSkill {
+public class SleepGunS extends AbstractSkill {
     @Override
     public int coolTime() {
-        return 30;
+        return 20;
     }
 
     @Override
     public String code() {
-        return "blind_fold";
+        return "sleep_gun";
     }
 
     @Override
     public String skillMessage() {
-        return "스킬 사용! 독침 발사";
+        return "스킬 사용! 수면총알 발사!";
     }
 
     @Override
     protected boolean onSkill(NewPlayer player) {
         Location loc = player.getLocation().clone();
-        List<Vector> line = Util.line(loc.getDirection(), 10, 0.5);
+        List<Vector> line = Util.line(loc.getDirection(), 15, 1);
 
         Scheduler.repeatDelayScheduler(new Scheduler.RunnableEx() {
             @Override
@@ -40,7 +40,8 @@ public class BlindFoldS extends AbstractSkill {
                     if (livingEntity.equals(player.getPlayer()))
                         continue;
 
-                    livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 200, 0));
+                    livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 60, 0));
+                    livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 60, 4));
                     stop();
                 }
             }

@@ -56,7 +56,7 @@ public final class RHAS extends JavaPlugin implements Listener {
         Timer timer = event.getTimer();
         Game game = Game.getGame();
         if (timer.equals(game.getTimer())) {
-            game.victoryRunner();
+            game.victoryRunner("악마가 제한시간동안 모든 인간을 잡지 못했습니다.");
         }
     }
 
@@ -71,6 +71,9 @@ public final class RHAS extends JavaPlugin implements Listener {
 
         if (game.getSurvivePlayer().contains(player.getUniqueId()) && game.getMurderPlayer().contains(killer.getUniqueId())) {
             game.killPlayer(player);
+            player.spigot().respawn();
+        } else if (game.getDeadPlayer().contains(player.getUniqueId())) {
+            game.victoryRunner("악마가 사망하였습니다!");
             player.spigot().respawn();
         }
     }

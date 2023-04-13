@@ -40,25 +40,24 @@ public class GameItems {
     public static final ItemStack[] RUNNER_WEAPON;
 
     static {
-        RED_KILLER = new ItemBuilder(Material.NETHERITE_AXE).setUnbreakable(true).addItemFlags(ItemFlag.HIDE_UNBREAKABLE, ItemFlag.HIDE_ATTRIBUTES)
-                .setCustomModelData(1).setDisplayName("§4§l교만").addAttribute(Attribute.GENERIC_ATTACK_DAMAGE, 15, AttributeModifier.Operation.ADD_NUMBER)
-                .addAttribute(Attribute.GENERIC_ATTACK_SPEED, -3, AttributeModifier.Operation.ADD_NUMBER).setLore(Arrays.asList(
+        RED_KILLER = new ItemBuilder(Material.NETHERITE_SWORD).setUnbreakable(true).addItemFlags(ItemFlag.HIDE_UNBREAKABLE, ItemFlag.HIDE_ATTRIBUTES)
+                .setCustomModelData(1).setDisplayName("§4§l교만").addAttribute(Attribute.GENERIC_ATTACK_DAMAGE, 4, AttributeModifier.Operation.ADD_NUMBER)
+                .addAttribute(Attribute.GENERIC_ATTACK_SPEED, -1, AttributeModifier.Operation.ADD_NUMBER).setLore(Arrays.asList(
                         "§f 우클릭, 쿨타임 : 7초",
-                        "§7   > 전방으로 데미지 5의 칼을 날립니다. (사거리 15칸)",
+                        "§7   > 전방으로 데미지 5의 칼을 날립니다.",
                         "",
                         "§f 쉬프트 좌클릭, 쿨타임 : 30초",
-                        "§7   > 지금 서 있는 자리에 와드를 설치합니다. (와드는 본인에게만 보인다)",
-                        "§7    다시 스킬을 사용하면 해당위치로 텔레포트 합니다.",
+                        "§7   > ",
                         "",
                         "§f 쉬프트 우클릭, 쿨타임 : 90초",
-                        "§7   > 20초간 우클릭의 쿨타임이 0초가 되며 칼 3개를 날리게 됩니다. 또한 무적시간을 무시합니다,",
+                        "§7   > 20초간 우클릭의 쿨타임이 0초가 됩니다. 또한 무적시간을 무시합니다,",
                         "",
                         "§f 패시브",
-                        "§7   > 인간에게 우클릭 적중시 20% 확률로 출혈을 부여합니다.",
+                        "§7   > 인간에게 우클릭 적중시 20% 확률로 3초간 독을 부여합니다.",
                         "",
                         "§7 하얀 가면속엔 자기 자신에 미쳐버린 살인마가 숨어있었다.")).build();
 
-        SHADOW = new ItemBuilder(Material.NETHERITE_HOE).setUnbreakable(true).addItemFlags(ItemFlag.HIDE_UNBREAKABLE, ItemFlag.HIDE_ATTRIBUTES)
+        SHADOW = new ItemBuilder(Material.NETHERITE_SWORD).setUnbreakable(true).addItemFlags(ItemFlag.HIDE_UNBREAKABLE, ItemFlag.HIDE_ATTRIBUTES)
                 .setCustomModelData(2).setDisplayName("§5§l분노").addAttribute(Attribute.GENERIC_ATTACK_DAMAGE, 8, AttributeModifier.Operation.ADD_NUMBER)
                 .addAttribute(Attribute.GENERIC_ATTACK_SPEED, -2, AttributeModifier.Operation.ADD_NUMBER).setLore(Arrays.asList(
                         "§f 우클릭, 쿨타임 : 20초",
@@ -68,41 +67,42 @@ public class GameItems {
                         "§7   > 자기 주변 모든 인간에게 10의 데미지를 준다.",
                         "",
                         "§f 쉬프트 우클릭, 쿨타임 : 90초",
-                        "§7   > 15초간 신속 II및 투명화를 얻는다.",
+                        "§7   > 25초간 신속 II및 투명화를 얻는다.",
                         "",
                         "§f 패시브",
-                        "§7   > 인간을 공격시 40% 확률로 10초간 어둠을 부여합니다.",
+                        "§7   > 인간을 공격시 40% 확률로 5초간 어둠을 부여합니다.",
                         "",
                         "§7 그는 그의 모든 것을 잃었고 분노 하였다.")).build();
 
         GAMBLER = new ItemBuilder(Material.NETHERITE_SWORD).setUnbreakable(true).addItemFlags(ItemFlag.HIDE_UNBREAKABLE, ItemFlag.HIDE_ATTRIBUTES)
-                .setCustomModelData(3).setDisplayName("§e§l탐욕").addAttribute(Attribute.GENERIC_ATTACK_DAMAGE, 5, AttributeModifier.Operation.ADD_NUMBER)
-                .addAttribute(Attribute.GENERIC_ATTACK_SPEED, -1, AttributeModifier.Operation.ADD_NUMBER).setLore(Arrays.asList(
+                .setCustomModelData(3).setDisplayName("§e§l탐욕").addAttribute(Attribute.GENERIC_ATTACK_DAMAGE, 15, AttributeModifier.Operation.ADD_NUMBER)
+                .addAttribute(Attribute.GENERIC_ATTACK_SPEED, -3, AttributeModifier.Operation.ADD_NUMBER).setLore(Arrays.asList(
                         "§f 우클릭, 쿨타임 : 20초",
                         "§7  > 자기 주변의 인간의 체력을 30% 흡수한다.",
                         "",
                         "§f 쉬프트 좌클릭, 쿨타임 : 20초",
-                        "§7  > 현재 체력의 25%를 소모하고 7초간 신속 III를 부여받습니다.",
+                        "§7  > 최대 체력의 25%를 소모하고 7초간 신속 III를 부여받습니다.",
                         "",
                         "§f 쉬프트 우클릭, 쿨타임 : 90초",
-                        "§7  > 현재 체력의 40%를 소모하고 자기 주변의 모든 인간을 흡수한다.",
+                        "§7  > 최대 체력의 70%를 소모하고 자기 주변의 모든 인간을 흡수한다.",
                         "",
                         "§f 패시브",
                         "§7   > 매 초 체력이 0.5%씩 감소합니다. 인간을 죽일시 체력을 50% 회복합니다.",
+                        "§7     만약 최대 체력 이상의 hp를 회복하게 될 경우 그 수치 만큼 추가 체력을 획득합니다.",
                         "",
                         "§7 그의 멈출줄 모르는 탐욕은 결국 자기 자신을 잡아먹었다.")).build();
 
-        DOUBLE = new ItemBuilder(Material.IRON_INGOT).setUnbreakable(true).addItemFlags(ItemFlag.HIDE_UNBREAKABLE, ItemFlag.HIDE_ATTRIBUTES)
-                .setCustomModelData(3).setDisplayName("§a§l나태").addAttribute(Attribute.GENERIC_ATTACK_DAMAGE, 3, AttributeModifier.Operation.ADD_NUMBER)
-                .addAttribute(Attribute.GENERIC_ATTACK_SPEED, 1, AttributeModifier.Operation.ADD_NUMBER).setLore(Arrays.asList(
+        DOUBLE = new ItemBuilder(Material.NETHERITE_SWORD).setUnbreakable(true).addItemFlags(ItemFlag.HIDE_UNBREAKABLE, ItemFlag.HIDE_ATTRIBUTES)
+                .setCustomModelData(4).setDisplayName("§a§l나태").addAttribute(Attribute.GENERIC_ATTACK_DAMAGE, 6, AttributeModifier.Operation.ADD_NUMBER)
+                .addAttribute(Attribute.GENERIC_ATTACK_SPEED, -1.5, AttributeModifier.Operation.ADD_NUMBER).setLore(Arrays.asList(
                         "§f 우클릭, 쿨타임 : 10초",
-                        "§7   > 10초간 구속 I및 힘 III를 부여받습니다.",
+                        "§7   > 10초간 구속 I및 힘 II를 부여받습니다.",
                         "",
                         "§f 쉬프트 좌클릭, 쿨타임 : 20초",
                         "§7   > 주변 모든 인간들을 불에 타게 합니다.",
                         "",
                         "§f 쉬프트 우클릭, 쿨타임 : 90초",
-                        "§7   > 모든 인간은 15초간 구속 III가 됩니다.",
+                        "§7   > 모든 인간은 15초간 구속 V가 됩니다.",
                         "",
                         "§f 패시브",
                         "§7   > 인간을 죽일시 증가하는 시간 증가량이 2배가 됩니다.",
@@ -175,39 +175,41 @@ public class GameItems {
 
         SLEEP_GUN = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(10).setDisplayName("§f수면총").setLore(Arrays.asList(
                 "§f 우클릭, 쿨타임 : 20초",
-                "§7  > 전방으로 눈덩이를 발사합니다. 피격시",
-                "§7    피격당한 엔티티에게 5초간 구속 5를 줍니다.",
+                "§7  > 전방으로 총알을 발사합니다.",
+                "§7    피격당한 엔티티에게 3초간 구속 5 및 실명을 부여합니다.",
                 "",
                 "§7 더이상 아이디어가 안떠오른다.")).build();
+        EventItemManager.setItemInEvent(SLEEP_GUN, new SleepGunI());
 
-        ISIS = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(11).setDisplayName("§fISIS").setLore(Arrays.asList(
+        POCKET_WATCH = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(11).setDisplayName("§f회중시계").setLore(Arrays.asList(
+                "§f 우클릭, 쿨타임 : 80초",
+                "§7  > 남은 시간이 10% 감소합니다.",
+                "",
+                "§7 줄어드는 시간")).build();
+        EventItemManager.setItemInEvent(POCKET_WATCH, new PocketWatchI());
+
+        ISIS = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(12).setDisplayName("§fISIS").setLore(Arrays.asList(
                 "§f 사망, 쿨타임 : X",
                 "§7  > 살인마에게 사망시 살인마에게 30초간 구속5, 발광을 부여합니다.",
                 "",
                 "§7 알라후 아크바르!")).build();
 
-        HEALTH_POTION = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(12).setDisplayName("§f건강").setLore(Arrays.asList(
-                "§f 패시브, 쿨타임 : X",
-                "§7  > 영구적으로 재생 III를 부여받습니다.",
+        HEALTH_POTION = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(13).setDisplayName("§f초재생").setLore(Arrays.asList(
+                "§f 우클릭, 쿨타임 : 60초",
+                "§7  > 60초동안 재생 III를 부여받습니다.",
                 "",
-                "§7 살아남기만 하면 된다. 어케든")).build();
-
-        POCKET_WATCH = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(13).setDisplayName("§f회중시계").setLore(Arrays.asList(
-                "§f 우클릭, 쿨타임 : 80초",
-                "§7  > 남은 시간이 10% 감소합니다.",
-                "",
-                "§7 줄어드는 시간")).build();
+                "§7 은근 잘 버팀")).build();
 
         TRAP = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(14).setDisplayName("§f함정").setLore(Arrays.asList(
                 "§f 우클릭, 쿨타임 : 30초",
                 "§7  > 현재 위치에 함정을 설치합니다. (최대 10개 까지 동시 설치)",
                 "§7    함정을 밟은 악마는 10초간 구속 5에 걸립니다.",
                 "",
-                "§7 줄어드는 시간")).build();
+                "§7 You just active my trap card")).build();
 
 
         RUNNER_WEAPON = new ItemStack[]{MEDICAL_BAG, ARTIFICIAL_EYE_OF_GOD, STIM_PACK, INVISIBLE,
-                INVINCIBLE, KOREA_MAN, BET, BLINDFOLD, LOCATION_CHANGE, ISIS, SLEEP_GUN, HEALTH_POTION, POCKET_WATCH, TRAP};
+                INVINCIBLE, KOREA_MAN, BET, BLINDFOLD, LOCATION_CHANGE, SLEEP_GUN, HEALTH_POTION, POCKET_WATCH};
 
         LOC_HELPER = new ItemBuilder(Material.DIAMOND_AXE).setDisplayName("§fLocation Set Up Helper").setLore(Collections.singletonList("§f이 아이템은 게임의 플레이를 지원하기 위해 제작되었습니다.")).build();
         EventItemManager.setItemInEvent(LOC_HELPER, new LocHelper());

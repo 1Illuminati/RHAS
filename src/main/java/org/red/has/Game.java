@@ -155,7 +155,6 @@ public class Game implements Runnable {
             player.getActivePotionEffects().clear();
         });
         worldData.removeArea(area);
-        this.joinPlayer.clear();
         this.specterPlayer.clear();;
         this.deadPlayer.clear();
         this.survivePlayer.clear();
@@ -188,7 +187,7 @@ public class Game implements Runnable {
         this.sendMessage("§c" + player.getName() + "님이 죽었습니다!", this.survivePlayer);
 
         if (survivePlayer.size() == 0) {
-            this.victoryMurder();
+            this.victoryMurder("모든 인간이 사망하였습니다!");
         }
     }
 
@@ -211,16 +210,16 @@ public class Game implements Runnable {
         this.survivePlayer.add(uuid);
     }
 
-    public void victoryMurder() {
-        this.sendTitle("§a§l[ §f승리! §a§l]", "", this.murderPlayer);
-        this.sendTitle("§c§l[ §f패배! §c§l]", "", this.deadPlayer);
+    public void victoryMurder(String reason) {
+        this.sendTitle("§a§l[ §f승리! §a§l]", "§7" + reason, this.murderPlayer);
+        this.sendTitle("§c§l[ §f패배! §c§l]", "§7" + reason, this.deadPlayer);
         this.clear();
     }
 
-    public void victoryRunner() {
-        this.sendTitle("§c§l[ §f패배! §c§l]", "", this.murderPlayer);
-        this.sendTitle("§a§l[ §f승리! §a§l]", "", this.survivePlayer);
-        this.sendTitle("§7§l[ §f승리? §7§l]", "", this.deadPlayer);
+    public void victoryRunner(String reason) {
+        this.sendTitle("§c§l[ §f패배! §c§l]", "§7" + reason, this.murderPlayer);
+        this.sendTitle("§a§l[ §f승리! §a§l]", "§7" + reason, this.survivePlayer);
+        this.sendTitle("§7§l[ §f승리? §7§l]", "§7" + reason, this.deadPlayer);
         this.clear();
     }
 

@@ -2,22 +2,22 @@ package org.red.has.item.runner;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.red.has.skill.runner.MedicalBagS;
+import org.red.has.skill.runner.LeapS;
 import org.red.library.entity.player.NewPlayer;
 import org.red.library.item.event.EventItem;
 import org.red.library.item.event.EventItemAnnotation;
 
-public class MedicalBagI implements EventItem {
+public class LeapI implements EventItem {
     @Override
     public String getCode() {
-        return "medical_bag";
+        return "leap";
     }
 
     @EventItemAnnotation(act = EventItemAnnotation.Act.RIGHT_CLICK_AIR)
     public void leftClickAir(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         NewPlayer newPlayer = NewPlayer.getNewPlayer(player);
-        new MedicalBagS().skill(newPlayer);
+        new LeapS().skill(newPlayer);
     }
 
     @EventItemAnnotation(act = EventItemAnnotation.Act.RIGHT_CLICK_BLOCK)
@@ -34,5 +34,4 @@ public class MedicalBagI implements EventItem {
     public void shiftLeftClickAir(PlayerInteractEvent event) {
         this.leftClickAir(event);
     }
-
 }

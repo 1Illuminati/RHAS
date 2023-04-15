@@ -23,7 +23,7 @@ public class ShadowR extends AbstractSkill {
     @Override
     protected boolean onSkill(NewPlayer player) {
         Location location = player.getLocation();
-        player.setVelocity(location.getDirection().multiply(7));
+        player.setVelocity(location.getDirection().multiply(4));
         return true;
     }
 }

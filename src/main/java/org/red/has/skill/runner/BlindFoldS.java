@@ -17,7 +17,7 @@ import java.util.List;
 public class BlindFoldS extends AbstractSkill {
     @Override
     public int coolTime() {
-        return 30;
+        return 25;
     }
 
     @Override

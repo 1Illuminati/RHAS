@@ -39,9 +39,8 @@ public class ShadowSR extends AbstractSkill {
         Scheduler.delayScheduler(new Scheduler.RunnableEx() {
             @Override
             public void function() {
-                for (UUID uuid : game.getJoinPlayer()) {
-                    Player runner = Bukkit.getPlayer(uuid);
-                    runner.showPlayer(RHAS.getPlugin(), player.getPlayer());
+                for (Player pl : Bukkit.getOnlinePlayers()) {
+                    pl.showPlayer(RHAS.getPlugin(), player.getPlayer());
                 }
             }
         }, 500);

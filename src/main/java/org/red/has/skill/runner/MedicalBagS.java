@@ -2,11 +2,8 @@ package org.red.has.skill.runner;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.SkullMeta;
 import org.red.has.Game;
 import org.red.has.Util;
 import org.red.has.skill.AbstractSkill;
@@ -53,8 +50,9 @@ public class MedicalBagS extends AbstractSkill {
                     HumanEntity humanEntity = event.getWhoClicked();
                     game.revivePlayer(player);
                     humanEntity.closeInventory();
-                    NewPlayer.getNewPlayer(player).getCoolTime().setCoolTime("medical_bag", 240, CoolTime.TimeType.SECOND);
+                    NewPlayer.getNewPlayer((Player) humanEntity).getCoolTime().setCoolTime("medical_bag", 240, CoolTime.TimeType.SECOND);
                     humanEntity.sendMessage(ChatColor.GREEN + "성공적으로 살려냈습니다!");
+                    player.teleport(humanEntity.getLocation());
                     player.sendMessage(ChatColor.GREEN + "누군가가 당신을 치료에 성공하였습니다!");
                 });
             }

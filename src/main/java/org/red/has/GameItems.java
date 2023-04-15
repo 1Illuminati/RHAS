@@ -31,7 +31,7 @@ public class GameItems {
     public static final ItemStack BLINDFOLD;
     public static final ItemStack LOCATION_CHANGE;
     public static final ItemStack SLEEP_GUN;
-    public static final ItemStack ISIS;
+    public static final ItemStack LEAP;
     public static final ItemStack HEALTH_POTION;
     public static final ItemStack POCKET_WATCH;
     public static final ItemStack TRAP;
@@ -102,7 +102,7 @@ public class GameItems {
                         "§7   > 10초간 구속 I및 힘 II를 부여받습니다.",
                         "",
                         "§f 쉬프트 좌클릭, 쿨타임 : 20초",
-                        "§7   > 주변 모든 인간들을 불에 타게 합니다.",
+                        "§7   > 주변 모든 인간을 자기 자신에게 끌고 옵니다.",
                         "",
                         "§f 쉬프트 우클릭, 쿨타임 : 90초",
                         "§7   > 모든 인간은 15초간 구속 V가 됩니다.",
@@ -165,7 +165,7 @@ public class GameItems {
         EventItemManager.setItemInEvent(BET, new BetI());
 
         BLINDFOLD = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(8).setDisplayName("§f실명").setLore(Arrays.asList(
-                "§f 우클릭, 쿨타임 : 30초",
+                "§f 우클릭, 쿨타임 : 25초",
                 "§7   > 전방으로 독침을 발사합니다. 적중시 10초간 실명을 부여합니다.",
                 "",
                 "§7 ^오^")).build();
@@ -193,11 +193,12 @@ public class GameItems {
                 "§7 줄어드는 시간")).build();
         EventItemManager.setItemInEvent(POCKET_WATCH, new PocketWatchI());
 
-        ISIS = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(12).setDisplayName("§fISIS").setLore(Arrays.asList(
-                "§f 사망, 쿨타임 : X",
-                "§7  > 살인마에게 사망시 살인마에게 30초간 구속5, 발광을 부여합니다.",
+        LEAP = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(12).setDisplayName("§f도약").setLore(Arrays.asList(
+                "§f 우클릭, 쿨타임 : 20",
+                "§7  > 도약합니다.",
                 "",
-                "§7 알라후 아크바르!")).build();
+                "§7 도도도도도오오오오오오오오오야야야야야야약")).build();
+        EventItemManager.setItemInEvent(LEAP, new LeapI());
 
         HEALTH_POTION = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(13).setDisplayName("§f초재생").setLore(Arrays.asList(
                 "§f 우클릭, 쿨타임 : 60초",

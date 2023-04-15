@@ -14,9 +14,15 @@ public abstract class AbstractSkill {
 
     public void skill(NewPlayer player) {
         CoolTime coolTime = player.getCoolTime();
+        Game game = Game.getGame();
 
-        if (!Game.getGame().isStarted()) {
+        if (!game.isStarted()) {
             player.sendMessage(ChatColor.RED + "게임이 시작되지 않았습니다.");
+            return;
+        }
+
+        if (game.getDeadPlayer().contains(player.getUniqueId())) {
+            player.sendMessage(ChatColor.RED + "죽은 사람은 스킬을 사용할 수 없습니다.");
             return;
         }
 

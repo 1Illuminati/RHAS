@@ -78,7 +78,6 @@ public final class RHAS extends JavaPlugin implements Listener {
 
         if (game.getSurvivePlayer().contains(runner.getUniqueId()) && game.getMurderPlayer().contains(killer.getUniqueId())) {
             game.killPlayer(runner, killer);
-            runner.spigot().respawn();
         } else if (game.getDeadPlayer().contains(runner.getUniqueId())) {
             game.victoryRunner("악마가 사망하였습니다!");
             runner.spigot().respawn();
@@ -95,6 +94,7 @@ public final class RHAS extends JavaPlugin implements Listener {
 
         if (game.getJoinPlayer().contains(humanEntity.getUniqueId())) {
             event.setCancelled(true);
+            humanEntity.setFoodLevel(20);
         }
     }
 
@@ -110,77 +110,68 @@ public final class RHAS extends JavaPlugin implements Listener {
         List<UUID> joinPlayer = game.getJoinPlayer();
         UUID uuid = player.getUniqueId();
         switch (args[0]) {
-            case "join":
+            case "join" -> {
                 if (joinPlayer.contains(uuid)) {
                     player.sendMessage("§cYou are already join the game");
                 } else {
                     joinPlayer.add(uuid);
                     game.sendMessage("§a" + player.getName() + " join the game", joinPlayer);
                 }
-            break;
-            case "unjoin":
+            }
+            case "unjoin" -> {
                 if (!joinPlayer.contains(uuid)) {
                     player.sendMessage("§cYou are not join the game");
                 } else {
                     joinPlayer.remove(uuid);
                     game.sendMessage("§a" + player.getName() + " unJoin the game", joinPlayer);
                 }
-            break;
-            case "loc":
-                player.getInventory().addItem(GameItems.LOC_HELPER);
-            break;
-            case "start":
+            }
+            case "loc" -> player.getInventory().addItem(GameItems.LOC_HELPER);
+            case "start" -> {
                 if (!player.isOp()) {
                     player.sendMessage("§cYou are not op");
                     return true;
                 }
-
                 if (game.isStarted()) {
                     player.sendMessage("§cThe game is already started");
                 } else {
                     game.run();
                 }
-            break;
-            case "timer":
+            }
+            case "timer" -> {
                 for (Iterator<KeyedBossBar> it = Bukkit.getBossBars(); it.hasNext(); ) {
                     BossBar bossBar = it.next();
                     bossBar.removeAll();
                 }
-            break;
-            case "stop":
+            }
+            case "stop" -> {
                 if (!player.isOp()) {
                     player.sendMessage("§cYou are not op");
                     return true;
                 }
-
                 if (!game.isStarted()) {
                     player.sendMessage("§cThe game is not started");
                 } else {
                     game.clear();
                 }
-            break;
-            case "time":
-                game.setTime(Integer.parseInt(args[1]));
-            break;
-            case "murderNum":
-                game.setMurderNum(Integer.parseInt(args[1]));
-            break;
-            case "rw":
+            }
+            case "time" -> game.setTime(Integer.parseInt(args[1]));
+            case "murderNum" -> game.setMurderNum(Integer.parseInt(args[1]));
+            case "rw" -> {
                 if (!player.isOp())
                     return false;
                 player.getInventory().addItem(GameItems.RUNNER_WEAPON);
-            break;
-            case "mw":
+            }
+            case "mw" -> {
                 if (!player.isOp())
                     return false;
                 player.getInventory().addItem(GameItems.MURDER_WEAPON);
-            break;
-            case "test":
+            }
+            case "test" -> {
                 Particle.DustOptions dustOptions = new Particle.DustOptions(Color.fromRGB(0, 127, 255), 1.0F);
                 player.spawnParticle(Particle.REDSTONE, player.getLocation(), 50, dustOptions);
-            break;
-            default:
-                sender.sendMessage("§a존재하지 않는 명령어 입니다.");
+            }
+            default -> sender.sendMessage("§a존재하지 않는 명령어 입니다.");
         }
         return true;
     }

@@ -1,11 +1,10 @@
 package org.red.has.skill.runner;
 
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
+import org.bukkit.Location;
 import org.red.has.skill.AbstractSkill;
 import org.red.library.entity.player.NewPlayer;
 
-public class InvincibleS extends AbstractSkill {
+public class LeapS extends AbstractSkill {
     @Override
     public int coolTime() {
         return 20;
@@ -13,17 +12,18 @@ public class InvincibleS extends AbstractSkill {
 
     @Override
     public String code() {
-        return "invincible";
+        return "leap";
     }
 
     @Override
     public String skillMessage() {
-        return "스킬 사용! 6초간 무적이 됩니다!";
+        return "스킬 사용! 앞으로 도약합니다.";
     }
 
     @Override
     protected boolean onSkill(NewPlayer player) {
-        player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 240, 4));
+        Location location = player.getLocation();
+        player.setVelocity(location.getDirection().multiply(3));
         return true;
     }
 }

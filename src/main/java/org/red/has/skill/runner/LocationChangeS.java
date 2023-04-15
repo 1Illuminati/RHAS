@@ -59,7 +59,7 @@ public class LocationChangeS extends AbstractSkill {
                     player.teleport(temp);
                     player.sendMessage(ChatColor.RED + "누군가와 위치가 바꼇습니다!");
                     humanEntity.sendMessage(ChatColor.GREEN + "위치 변경 성공!");
-                    NewPlayer.getNewPlayer(player).getCoolTime().setCoolTime("location_change", 50, CoolTime.TimeType.SECOND);
+                    NewPlayer.getNewPlayer((Player) humanEntity).getCoolTime().setCoolTime("location_change", 50, CoolTime.TimeType.SECOND);
                 });
             }
         }

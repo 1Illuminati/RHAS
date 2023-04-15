@@ -24,4 +24,14 @@ public class LocationChangeI implements EventItem {
     public void leftClickBlock(PlayerInteractEvent event) {
         this.leftClickAir(event);
     }
+
+    @EventItemAnnotation(act = EventItemAnnotation.Act.SHIFT_RIGHT_CLICK_BLOCK)
+    public void shiftLeftClickBlock(PlayerInteractEvent event) {
+        this.leftClickAir(event);
+    }
+
+    @EventItemAnnotation(act = EventItemAnnotation.Act.RIGHT_CLICK_AIR)
+    public void shiftLeftClickAir(PlayerInteractEvent event) {
+        this.leftClickAir(event);
+    }
 }

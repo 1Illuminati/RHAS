@@ -25,7 +25,7 @@ public class NoAbilityS extends AbstractSkill {
     protected boolean onSkill(NewPlayer player) {
         Game game = Game.getGame();
 
-        if (game.getJoinPlayer().size() == 1 && game.getJoinPlayer().contains(player.getUniqueId())) {
+        if (game.getSurvivePlayer().size() == 1 && game.getSurvivePlayer().contains(player.getUniqueId())) {
             game.sendTitle("§e§l[ §fㅋㅋㅋㅋ §e§l]", "§7ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ", game.getJoinPlayer());
             player.getInventory().addItem(GameItems.RUNNER_WEAPON);
             return true;

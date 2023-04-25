@@ -42,7 +42,7 @@ public class GameItems {
     public static final ItemStack[] RUNNER_WEAPON;
 
     static {
-        RED_KILLER = new ItemBuilder(Material.NETHERITE_SWORD).setUnbreakable(true).addItemFlags(ItemFlag.HIDE_UNBREAKABLE, ItemFlag.HIDE_ATTRIBUTES)
+        RED_KILLER = new ItemBuilder(Material.STONE_SWORD).setUnbreakable(true).addItemFlags(ItemFlag.HIDE_UNBREAKABLE, ItemFlag.HIDE_ATTRIBUTES)
                 .setCustomModelData(1).setDisplayName("§4§l교만").addAttribute(Attribute.GENERIC_ATTACK_DAMAGE, 4, AttributeModifier.Operation.ADD_NUMBER)
                 .addAttribute(Attribute.GENERIC_ATTACK_SPEED, -1, AttributeModifier.Operation.ADD_NUMBER).setLore(Arrays.asList(
                         "§f 우클릭, 쿨타임 : 7초",
@@ -59,7 +59,7 @@ public class GameItems {
                         "",
                         "§7 하얀 가면속엔 자기 자신에 미쳐버린 살인마가 숨어있었다.")).build();
 
-        SHADOW = new ItemBuilder(Material.NETHERITE_SWORD).setUnbreakable(true).addItemFlags(ItemFlag.HIDE_UNBREAKABLE, ItemFlag.HIDE_ATTRIBUTES)
+        SHADOW = new ItemBuilder(Material.STONE_SWORD).setUnbreakable(true).addItemFlags(ItemFlag.HIDE_UNBREAKABLE, ItemFlag.HIDE_ATTRIBUTES)
                 .setCustomModelData(2).setDisplayName("§5§l분노").addAttribute(Attribute.GENERIC_ATTACK_DAMAGE, 8, AttributeModifier.Operation.ADD_NUMBER)
                 .addAttribute(Attribute.GENERIC_ATTACK_SPEED, -2, AttributeModifier.Operation.ADD_NUMBER).setLore(Arrays.asList(
                         "§f 우클릭, 쿨타임 : 20초",
@@ -77,7 +77,7 @@ public class GameItems {
                         "§7 그는 그의 모든 것을 잃었고 분노 하였다.")).build();
         EventItemManager.setItemInEvent(SHADOW, new ShadowI());
 
-        GAMBLER = new ItemBuilder(Material.NETHERITE_SWORD).setUnbreakable(true).addItemFlags(ItemFlag.HIDE_UNBREAKABLE, ItemFlag.HIDE_ATTRIBUTES)
+        GAMBLER = new ItemBuilder(Material.STONE_SWORD).setUnbreakable(true).addItemFlags(ItemFlag.HIDE_UNBREAKABLE, ItemFlag.HIDE_ATTRIBUTES)
                 .setCustomModelData(3).setDisplayName("§e§l탐욕").addAttribute(Attribute.GENERIC_ATTACK_DAMAGE, 15, AttributeModifier.Operation.ADD_NUMBER)
                 .addAttribute(Attribute.GENERIC_ATTACK_SPEED, -3, AttributeModifier.Operation.ADD_NUMBER).setLore(Arrays.asList(
                         "§f 우클릭, 쿨타임 : 20초",
@@ -95,7 +95,7 @@ public class GameItems {
                         "",
                         "§7 그의 멈출줄 모르는 탐욕은 결국 자기 자신을 잡아먹었다.")).build();
 
-        DOUBLE = new ItemBuilder(Material.NETHERITE_SWORD).setUnbreakable(true).addItemFlags(ItemFlag.HIDE_UNBREAKABLE, ItemFlag.HIDE_ATTRIBUTES)
+        DOUBLE = new ItemBuilder(Material.STONE_SWORD).setUnbreakable(true).addItemFlags(ItemFlag.HIDE_UNBREAKABLE, ItemFlag.HIDE_ATTRIBUTES)
                 .setCustomModelData(4).setDisplayName("§a§l나태").addAttribute(Attribute.GENERIC_ATTACK_DAMAGE, 6, AttributeModifier.Operation.ADD_NUMBER)
                 .addAttribute(Attribute.GENERIC_ATTACK_SPEED, -1.5, AttributeModifier.Operation.ADD_NUMBER).setLore(Arrays.asList(
                         "§f 우클릭, 쿨타임 : 10초",
@@ -115,21 +115,21 @@ public class GameItems {
 
         MURDER_WEAPON = new ItemStack[]{SHADOW, DOUBLE};
 
-        MEDICAL_BAG = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(1).setDisplayName("§f부활").setLore(Arrays.asList(
+        MEDICAL_BAG = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(1).setDisplayName("§f구급상자").setLore(Arrays.asList(
                 "§f 우클릭, 쿨타임 : 240초",
                 "§7   > 죽은 도망자중 한명을 되살립니다.",
                 "",
                 "§7 죽은자는 말이 많다")).build();
         EventItemManager.setItemInEvent(MEDICAL_BAG, new MedicalBagI());
 
-        ARTIFICIAL_EYE_OF_GOD = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(2).setDisplayName("§f천리안").setLore(Arrays.asList(
+        ARTIFICIAL_EYE_OF_GOD = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(2).setDisplayName("§f천년눈").setLore(Arrays.asList(
                 "§f 우클릭, 쿨타임 : 25초",
                 "§7   > 15초간 악마에게 발광을 부여합니다.",
                 "",
-                "§7 어째서인지 내가 능력을 쓰면 남들도 보인다.")).build();
+                "§7 마인드 스캔!")).build();
         EventItemManager.setItemInEvent(ARTIFICIAL_EYE_OF_GOD, new ArtificialEyeOfGodI());
 
-        STIM_PACK = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(3).setDisplayName("§스팀팩").setLore(Arrays.asList(
+        STIM_PACK = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(3).setDisplayName("§f스팀팩").setLore(Arrays.asList(
                 "§f 우클릭, 쿨타임 : 30초",
                 "§7   > 10초간 신속 II를 받습니다.",
                 "",
@@ -143,35 +143,35 @@ public class GameItems {
                 "§7 내가 사라져볼게 얍!")).build();
         EventItemManager.setItemInEvent(INVISIBLE, new InvisibleI());
 
-        INVINCIBLE = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(5).setDisplayName("§f무적").setLore(Arrays.asList(
-                "§f 우클릭, 쿨타임 : 10초",
-                "§7   > 6초간 저항 V를 받습니다.",
+        INVINCIBLE = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(5).setDisplayName("§f방패").setLore(Arrays.asList(
+                "§f 우클릭, 쿨타임 : 20초",
+                "§7   > 10초간 저항 V를 받습니다.",
                 "",
                 "§  안 아파~ 하나도 안 아파~")).build();
         EventItemManager.setItemInEvent(INVINCIBLE, new InvincibleI());
 
-        NO_ABILITY = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(6).setDisplayName("§f무능력").setLore(Arrays.asList(
+        NO_ABILITY = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(6).setDisplayName("§f?").setLore(Arrays.asList(
                 "§f 우클릭, 쿨타임 : ㅋ초",
                 "§7   > 놀랍게도 아무 일도 일어나지 않습니다.",
                 "",
                 "§7 ㅋ")).build();
         EventItemManager.setItemInEvent(NO_ABILITY, new NoAbilityI());
 
-        BET = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(7).setDisplayName("§f밀치기").setLore(Arrays.asList(
+        BET = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(7).setDisplayName("§f방망이").setLore(Arrays.asList(
                 "§f 우클릭, 쿨타임 : 20초",
                 "§7  > 3초간 아이템에 밀치기 X 인챈트가 부여됩니다.",
                 "",
                 "§7 홈런~! 볼")).build();
         EventItemManager.setItemInEvent(BET, new BetI());
 
-        BLINDFOLD = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(8).setDisplayName("§f실명").setLore(Arrays.asList(
+        BLINDFOLD = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(8).setDisplayName("§f독침").setLore(Arrays.asList(
                 "§f 우클릭, 쿨타임 : 25초",
                 "§7   > 전방으로 독침을 발사합니다. 적중시 10초간 실명을 부여합니다.",
                 "",
                 "§7 ^오^")).build();
         EventItemManager.setItemInEvent(BLINDFOLD, new BlindFoldI());
 
-        LOCATION_CHANGE = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(9).setDisplayName("§f위치바꾸기").setLore(Arrays.asList(
+        LOCATION_CHANGE = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(9).setDisplayName("§f위치 바꾸기").setLore(Arrays.asList(
                 "§f 우클릭, 쿨타임 : 50초",
                 "§7   > 위치를 바꿔보죠?",
                 "",
@@ -194,17 +194,18 @@ public class GameItems {
         EventItemManager.setItemInEvent(POCKET_WATCH, new PocketWatchI());
 
         LEAP = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(12).setDisplayName("§f도약").setLore(Arrays.asList(
-                "§f 우클릭, 쿨타임 : 20",
+                "§f 우클릭, 쿨타임 : 20초",
                 "§7  > 도약합니다.",
                 "",
                 "§7 도도도도도오오오오오오오오오야야야야야야약")).build();
         EventItemManager.setItemInEvent(LEAP, new LeapI());
 
-        HEALTH_POTION = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(13).setDisplayName("§f초재생").setLore(Arrays.asList(
-                "§f 우클릭, 쿨타임 : 60초",
-                "§7  > 60초동안 재생 III를 부여받습니다.",
+        HEALTH_POTION = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(13).setDisplayName("§f회복포션").setLore(Arrays.asList(
+                "§f 우클릭, 쿨타임 : 25초",
+                "§7  > 체력을 전부 회복합니다.",
                 "",
                 "§7 은근 잘 버팀")).build();
+        EventItemManager.setItemInEvent(HEALTH_POTION, new HealthPotionI());
 
         TRAP = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(14).setDisplayName("§f함정").setLore(Arrays.asList(
                 "§f 우클릭, 쿨타임 : 30초",
@@ -215,7 +216,7 @@ public class GameItems {
 
 
         RUNNER_WEAPON = new ItemStack[]{MEDICAL_BAG, ARTIFICIAL_EYE_OF_GOD, STIM_PACK, INVISIBLE,
-                INVINCIBLE, NO_ABILITY, BET, BLINDFOLD, LOCATION_CHANGE, SLEEP_GUN, POCKET_WATCH};
+                INVINCIBLE, NO_ABILITY, BET, BLINDFOLD, LOCATION_CHANGE, SLEEP_GUN, POCKET_WATCH, HEALTH_POTION};
 
         LOC_HELPER = new ItemBuilder(Material.DIAMOND_AXE).setDisplayName("§fLocation Set Up Helper").setLore(Collections.singletonList("§f이 아이템은 게임의 플레이를 지원하기 위해 제작되었습니다.")).build();
         EventItemManager.setItemInEvent(LOC_HELPER, new LocHelper());

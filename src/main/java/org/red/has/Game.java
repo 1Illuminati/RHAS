@@ -307,9 +307,9 @@ public class Game implements Runnable {
         Scheduler.delayScheduler(new Scheduler.RunnableEx() {
             @Override
             public void function() {
-                sendTitle("§c§l[ §f게임 시작! §c§l]", "§f10초뒤 능력과 악마가 정해집니다!", joinPlayer);
+                sendTitle("§c§l[ §f게임 시작! §c§l]", "§f30초뒤 능력과 악마가 정해집니다!", joinPlayer);
                 KeyedBossBar bar = Bukkit.createBossBar(new NamespacedKey(RHAS.getPlugin(), "delay_timer"), "10초뒤 능력과 악마가 정해집니다!", BarColor.RED, BarStyle.SOLID, BarFlag.CREATE_FOG, BarFlag.DARKEN_SKY);
-                Timer delayTimer = new Timer("delay_timer", bar, 10);
+                Timer delayTimer = new Timer("delay_timer", bar, 30);
                 Game.this.joinPlayer.forEach(uuid -> {
                     Player player = Bukkit.getPlayer(uuid);
                     player.teleport(Game.this.spawn);
@@ -344,7 +344,7 @@ public class Game implements Runnable {
 
                 timer.start();
             }
-        }, 280);
+        }, 680);
     }
 
     private static class GameArea implements Area {

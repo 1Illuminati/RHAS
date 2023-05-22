@@ -1,9 +1,9 @@
 package org.red.has;
 
 import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.util.Vector;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Util {
-    public static ItemStack getPlayerSkull(Player player) {
+    public static ItemStack getPlayerSkull(OfflinePlayer player) {
         ItemStack itemStack = new ItemStack(org.bukkit.Material.PLAYER_HEAD, 1);
         SkullMeta skullMeta = (org.bukkit.inventory.meta.SkullMeta) itemStack.getItemMeta();
         skullMeta.setOwningPlayer(player);

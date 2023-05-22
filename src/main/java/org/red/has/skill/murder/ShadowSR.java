@@ -32,7 +32,7 @@ public class ShadowSR extends AbstractSkill {
     protected boolean onSkill(NewPlayer player) {
         Game game = Game.getGame();
         player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 500, 1));
-        for (UUID uuid : game.getJoinPlayer()) {
+        for (UUID uuid : game.getSetting().getJoinPlayers()) {
             Player runner = Bukkit.getPlayer(uuid);
             runner.hidePlayer(RHAS.getPlugin(), player.getPlayer());
         }

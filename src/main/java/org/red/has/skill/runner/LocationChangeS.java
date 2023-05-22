@@ -18,7 +18,7 @@ import java.util.UUID;
 public class LocationChangeS extends AbstractSkill {
     @Override
     public int coolTime() {
-        return 50;
+        return 90;
     }
 
     @Override
@@ -43,7 +43,7 @@ public class LocationChangeS extends AbstractSkill {
             super(27, "누구랑 위치를 바꿔볼까");
 
             int i = 0;
-            for (UUID uuid : game.getJoinPlayer()) {
+            for (UUID uuid : game.getSetting().getJoinPlayers()) {
 
                 if (game.getDeadPlayer().contains(uuid))
                     continue;

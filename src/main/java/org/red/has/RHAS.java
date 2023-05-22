@@ -2,6 +2,7 @@ package org.red.has;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
+import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.boss.KeyedBossBar;
@@ -14,14 +15,16 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.red.library.event.TimerEndEvent;
 import org.red.library.event.area.player.AreaPlayerMoveEvent;
+import org.red.library.item.ItemBuilder;
+import org.red.library.item.event.EventItemManager;
 import org.red.library.world.timer.Timer;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public final class RHAS extends JavaPlugin implements Listener {
     private static RHAS plugin;
@@ -50,7 +53,7 @@ public final class RHAS extends JavaPlugin implements Listener {
 
         PlayerMoveEvent playerMoveEvent = event.getEvent();
         if (event.getArea().equals(game.getArea()) && event.getAreaMoveAct() == AreaPlayerMoveEvent.AreaMoveAct.EXIT &&
-                game.getJoinPlayer().contains(playerMoveEvent.getPlayer().getUniqueId())) {
+                game.getSetting().containsJoinPlayer(playerMoveEvent.getPlayer().getUniqueId())) {
             playerMoveEvent.setCancelled(true);
         }
     }
@@ -79,6 +82,10 @@ public final class RHAS extends JavaPlugin implements Listener {
         if (game.getSurvivePlayer().contains(runner.getUniqueId()) && game.getMurderPlayer().contains(killer.getUniqueId())) {
             game.killPlayer(runner, killer);
         }
+
+        if (!game.getSetting().isDeathMessage()) {
+            event.setDeathMessage("");
+        }
     }
 
     @EventHandler
@@ -88,13 +95,38 @@ public final class RHAS extends JavaPlugin implements Listener {
 
         if (!game.isStarted())
             return;
+        GameSetting setting = game.getSetting();
 
-        if (game.getJoinPlayer().contains(humanEntity.getUniqueId())) {
+        if (setting.isHunger())
+            return;
+
+        if (setting.containsJoinPlayer(humanEntity.getUniqueId())) {
             event.setCancelled(true);
             humanEntity.setFoodLevel(20);
         }
     }
 
+    @EventHandler
+    public void playerQuitEvent(PlayerQuitEvent event) {
+        Game game = Game.getGame();
+        UUID uuid = event.getPlayer().getUniqueId();
+
+        if (!game.isStarted())
+            return;
+
+        List<UUID> joinPlayers = game.getSetting().getJoinPlayers();
+        if (joinPlayers.contains(uuid)) {
+            joinPlayers.remove(uuid);
+            game.getDeadPlayer().remove(uuid);
+            game.getSurvivePlayer().remove(uuid);
+            game.getMurderPlayer().remove(uuid);
+
+            if (game.getSurvivePlayer().size() == 0 || game.getMurderPlayer().size() == 0) {
+                game.clear();
+            }
+        }
+    }
+    private static final ItemStack LOC_HELPER = new ItemBuilder(Material.DIAMOND_AXE).setDisplayName("§fLocation Set Up Helper").setLore(Collections.singletonList("§f이 아이템은 게임의 플레이를 지원하기 위해 제작되었습니다.")).build();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length == 0) {
@@ -104,23 +136,23 @@ public final class RHAS extends JavaPlugin implements Listener {
 
         Game game = Game.getGame();
         Player player = (Player) sender;
-        List<UUID> joinPlayer = game.getJoinPlayer();
+        GameSetting gameSetting = game.getSetting();
         UUID uuid = player.getUniqueId();
         switch (args[0]) {
             case "join" -> {
-                if (joinPlayer.contains(uuid)) {
+                if (gameSetting.containsJoinPlayer(uuid)) {
                     player.sendMessage("§cYou are already join the game");
                 } else {
-                    joinPlayer.add(uuid);
-                    game.sendMessage("§a" + player.getName() + " join the game", joinPlayer);
+                    gameSetting.addJoinPlayer(uuid);
+                    game.sendMessage("§a" + player.getName() + " join the game", gameSetting.getJoinPlayers());
                 }
             }
             case "unjoin" -> {
-                if (!joinPlayer.contains(uuid)) {
+                if (!gameSetting.containsJoinPlayer(uuid)) {
                     player.sendMessage("§cYou are not join the game");
                 } else {
-                    joinPlayer.remove(uuid);
-                    game.sendMessage("§a" + player.getName() + " unJoin the game", joinPlayer);
+                    gameSetting.removeJoinPlayer(uuid);
+                    game.sendMessage("§a" + player.getName() + " unJoin the game", gameSetting.getJoinPlayers());
                 }
             }
             case "loc" -> player.getInventory().addItem(GameItems.LOC_HELPER);
@@ -152,21 +184,29 @@ public final class RHAS extends JavaPlugin implements Listener {
                     game.clear();
                 }
             }
-            case "time" -> game.setTime(Integer.parseInt(args[1]));
-            case "murderNum" -> game.setMurderNum(Integer.parseInt(args[1]));
+            case "time" -> gameSetting.setTime(Integer.parseInt(args[1]));
+            case "murderNum" -> gameSetting.setMurderNum(Integer.parseInt(args[1]));
             case "rw" -> {
                 if (!player.isOp())
                     return false;
-                player.getInventory().addItem(GameItems.RUNNER_WEAPON);
+                for (RunnerAbility runnerAbility : RunnerAbility.values())
+                    player.getInventory().addItem(runnerAbility.itemStack);
             }
             case "mw" -> {
                 if (!player.isOp())
                     return false;
-                player.getInventory().addItem(GameItems.MURDER_WEAPON);
+                for (MurderAbility murderAbility : MurderAbility.values())
+                    player.getInventory().addItem(murderAbility.itemStack);
             }
             case "test" -> {
                 Particle.DustOptions dustOptions = new Particle.DustOptions(Color.fromRGB(0, 127, 255), 1.0F);
                 player.spawnParticle(Particle.REDSTONE, player.getLocation(), 50, dustOptions);
+            }
+            case "list" -> {
+                for (UUID list : gameSetting.getJoinPlayers()) {
+                    Player joiner = Bukkit.getPlayer(list);
+                    if (joiner != null) player.sendMessage(joiner.getName());
+                }
             }
             default -> sender.sendMessage("§a존재하지 않는 명령어 입니다.");
         }

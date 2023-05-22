@@ -18,7 +18,7 @@ public class LocHelper implements EventItem {
         event.setCancelled(true);
         Game game = Game.getGame();
         Location location = event.getClickedBlock().getLocation().getBlock().getLocation();
-        game.setStart(location);
+        game.getSetting().setStartLoc(location);
         event.getPlayer().sendMessage(String.format("좌표 1 지정 완료 %d %d %d", location.getBlockX(), location.getBlockY(), location.getBlockZ()));
     }
 
@@ -27,16 +27,16 @@ public class LocHelper implements EventItem {
         event.setCancelled(true);
         Game game = Game.getGame();
         Location location = event.getClickedBlock().getLocation().getBlock().getLocation();
-        game.setEnd(location);
+        game.getSetting().setEndLoc(location);
         event.getPlayer().sendMessage(String.format("좌표 2 지정 완료 %d %d %d", location.getBlockX(), location.getBlockY(), location.getBlockZ()));
     }
 
     @EventItemAnnotation(act = EventItemAnnotation.Act.SWAP_HAND)
-    public void dropItem(PlayerSwapHandItemsEvent event) {
+    public void swapHandItem(PlayerSwapHandItemsEvent event) {
         event.setCancelled(true);
         Game game = Game.getGame();
         Location location = event.getPlayer().getLocation().getBlock().getLocation();
-        game.setSpawn(location);
+        game.getSetting().setSpawnLoc(location);
         event.getPlayer().sendMessage(String.format("스폰 지정 완료 %d %d %d", location.getBlockX(), location.getBlockY(), location.getBlockZ()));
     }
 }

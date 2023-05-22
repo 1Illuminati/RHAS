@@ -31,7 +31,7 @@ public class InvisibleS extends AbstractSkill {
     @Override
     protected boolean onSkill(NewPlayer player) {
         Game game = Game.getGame();
-        for (UUID uuid : game.getJoinPlayer()) {
+        for (UUID uuid : game.getSetting().getJoinPlayers()) {
             Player runner = Bukkit.getPlayer(uuid);
             runner.hidePlayer(RHAS.getPlugin(), player.getPlayer());
         }
@@ -42,7 +42,7 @@ public class InvisibleS extends AbstractSkill {
                     pl.showPlayer(RHAS.getPlugin(), player.getPlayer());
                 }
             }
-        }, 400);
+        }, 200);
         return true;
     }
 }

@@ -102,7 +102,7 @@ public class GameItems {
                         "§7   > 10초간 구속 I및 힘 II를 부여받습니다.",
                         "",
                         "§f 쉬프트 좌클릭, 쿨타임 : 20초",
-                        "§7   > 주변 모든 인간을 자기 자신에게 끌고 옵니다.",
+                        "§7   > 주변의 모든 인간을 잠시동안 얼어붙게 만듭니다.",
                         "",
                         "§f 쉬프트 우클릭, 쿨타임 : 90초",
                         "§7   > 모든 인간은 15초간 구속 V가 됩니다.",
@@ -138,7 +138,7 @@ public class GameItems {
 
         INVISIBLE = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(4).setDisplayName("§f투명화").setLore(Arrays.asList(
                 "§f 우클릭, 쿨타임 : 50초",
-                "§7   > 20초간 투명화를 받습니다.",
+                "§7   > 10초간 투명화를 받습니다.",
                 "",
                 "§7 내가 사라져볼게 얍!")).build();
         EventItemManager.setItemInEvent(INVISIBLE, new InvisibleI());
@@ -147,7 +147,7 @@ public class GameItems {
                 "§f 우클릭, 쿨타임 : 20초",
                 "§7   > 10초간 저항 V를 받습니다.",
                 "",
-                "§  안 아파~ 하나도 안 아파~")).build();
+                "§7 안 아파~ 하나도 안 아파~")).build();
         EventItemManager.setItemInEvent(INVINCIBLE, new InvincibleI());
 
         NO_ABILITY = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(6).setDisplayName("§f?").setLore(Arrays.asList(
@@ -172,7 +172,7 @@ public class GameItems {
         EventItemManager.setItemInEvent(BLINDFOLD, new BlindFoldI());
 
         LOCATION_CHANGE = new ItemBuilder(Material.IRON_INGOT).setCustomModelData(9).setDisplayName("§f위치 바꾸기").setLore(Arrays.asList(
-                "§f 우클릭, 쿨타임 : 50초",
+                "§f 우클릭, 쿨타임 : 90초",
                 "§7   > 위치를 바꿔보죠?",
                 "",
                 "§7 체인지!")).build();
@@ -216,7 +216,7 @@ public class GameItems {
 
 
         RUNNER_WEAPON = new ItemStack[]{MEDICAL_BAG, ARTIFICIAL_EYE_OF_GOD, STIM_PACK, INVISIBLE,
-                INVINCIBLE, NO_ABILITY, BET, BLINDFOLD, LOCATION_CHANGE, SLEEP_GUN, POCKET_WATCH, HEALTH_POTION};
+                INVINCIBLE, NO_ABILITY, BET, BLINDFOLD, LOCATION_CHANGE, SLEEP_GUN, POCKET_WATCH, HEALTH_POTION, LEAP};
 
         LOC_HELPER = new ItemBuilder(Material.DIAMOND_AXE).setDisplayName("§fLocation Set Up Helper").setLore(Collections.singletonList("§f이 아이템은 게임의 플레이를 지원하기 위해 제작되었습니다.")).build();
         EventItemManager.setItemInEvent(LOC_HELPER, new LocHelper());

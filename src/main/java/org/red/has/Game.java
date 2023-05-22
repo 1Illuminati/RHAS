@@ -32,18 +32,13 @@ public class Game implements Runnable {
     public static void clearGame() {
         game.clear();
     }
+    private final GameSetting setting = new GameSetting(this);
     private final UUID gameCode;
-    private final List<UUID> joinPlayer = new ArrayList<>();
     private final List<UUID> survivePlayer = new ArrayList<>();
     private final List<UUID> deadPlayer = new ArrayList<>();
     private final List<UUID> specterPlayer = new ArrayList<>();
     private final List<UUID> murderPlayer = new ArrayList<>();
     private boolean isStarted = false;
-    private int time = 240;
-    private int murderNum = 1;
-    private Location spawn;
-    private Location start;
-    private Location end;
     private GameArea area;
     private Timer timer;
 
@@ -51,8 +46,8 @@ public class Game implements Runnable {
         this.gameCode = uuid;
     }
 
-    public List<UUID> getJoinPlayer() {
-        return joinPlayer;
+    public GameSetting getSetting() {
+        return this.setting;
     }
 
     public List<UUID> getSurvivePlayer() {
@@ -73,46 +68,6 @@ public class Game implements Runnable {
 
     public List<UUID> getMurderPlayer() {
         return murderPlayer;
-    }
-
-    public void setSpawn(Location spawn) {
-        this.spawn = spawn;
-    }
-
-    public Location getSpawn() {
-        return spawn;
-    }
-
-    public void setStart(Location start) {
-        this.start = start;
-    }
-
-    public Location getStart() {
-        return start;
-    }
-
-    public void setEnd(Location end) {
-        this.end = end;
-    }
-
-    public Location getEnd() {
-        return end;
-    }
-
-    public void setMurderNum(int num) {
-        this.murderNum = num;
-    }
-
-    public int getMurderNum() {
-        return murderNum;
-    }
-
-    public void setTime(int time) {
-        this.time = time;
-    }
-
-    public int getTime() {
-        return time;
     }
 
     public Timer getTimer() {
@@ -148,8 +103,8 @@ public class Game implements Runnable {
     }
 
     public void clear() {
-        WorldData worldData = WorldData.getWorldData(this.spawn.getWorld());
-        this.joinPlayer.forEach(uuid -> {
+        WorldData worldData = WorldData.getWorldData(this.setting.getSpawnLoc().getWorld());
+        this.setting.getJoinPlayers().forEach(uuid -> {
             Player player = Bukkit.getPlayer(uuid);
             player.getInventory().clear();
 
@@ -241,19 +196,23 @@ public class Game implements Runnable {
         if (this.isStarted()) {
             throw new IllegalStateException("Game is already started");
         }
+        List<UUID> joinPlayer = this.setting.getJoinPlayers();
+        Location start = this.setting.getStartLoc();
+        Location end = this.setting.getEndLoc();
+        Location spawn = this.setting.getSpawnLoc();
 
-        if (this.joinPlayer.size() < 2) {
+        if (joinPlayer.size() < 2) {
             sendMessage("§c인원이 부족하여 게임이 취소되었습니다.", joinPlayer);
             return;
         }
 
-        if (this.spawn == null || this.start == null || this.end == null) {
+        if (!setting.locSettingCheck()) {
             sendMessage("§c게임 좌표지정 에러 발생. 관리자에게 문의하세요.", joinPlayer);
             return;
         }
 
-        World world = this.spawn.getWorld();
-        if (world != this.start.getWorld() || world != this.end.getWorld()) {
+        World world = spawn.getWorld();
+        if (world != start.getWorld() || world != end.getWorld()) {
             sendMessage("§c게임 좌표지정 에러 발생. 관리자에게 문의하세요.", joinPlayer);
             return;
         }
@@ -265,7 +224,7 @@ public class Game implements Runnable {
 
         isStarted = true;
         KeyedBossBar bar = Bukkit.createBossBar(new NamespacedKey(RHAS.getPlugin(), "timer"), "Roll Or Die", BarColor.RED, BarStyle.SOLID, BarFlag.CREATE_FOG, BarFlag.DARKEN_SKY);
-        this.timer = new Timer("GameTimer", bar, time);
+        this.timer = new Timer("GameTimer", bar, this.setting.getTime());
 
         for (UUID uuid : joinPlayer) {
             Player player = Bukkit.getPlayer(uuid);
@@ -278,9 +237,9 @@ public class Game implements Runnable {
             sendMessage("§c" + offlinePlayer.getName() + "플레이어가 접속상태가 아니므로 게임에서 강제 퇴장됩니다.", joinPlayer);
         }
 
-        this.survivePlayer.addAll(this.joinPlayer);
+        this.survivePlayer.addAll(joinPlayer);
 
-        for (int i = 0; i < this.murderNum; i++) {
+        for (int i = 0; i < this.setting.getMurderNum(); i++) {
             UUID murder = this.survivePlayer.get(new Random().nextInt(this.survivePlayer.size()));
             this.survivePlayer.remove(murder);
             this.murderPlayer.add(murder);
@@ -296,7 +255,7 @@ public class Game implements Runnable {
             }, i * 20);
         }
 
-        this.joinPlayer.forEach(uuid -> {
+        joinPlayer.forEach(uuid -> {
             Player player = Bukkit.getPlayer(uuid);
             player.setGameMode(GameMode.SPECTATOR);
             player.getInventory().clear();
@@ -308,11 +267,11 @@ public class Game implements Runnable {
             @Override
             public void function() {
                 sendTitle("§c§l[ §f게임 시작! §c§l]", "§f30초뒤 능력과 악마가 정해집니다!", joinPlayer);
-                KeyedBossBar bar = Bukkit.createBossBar(new NamespacedKey(RHAS.getPlugin(), "delay_timer"), "10초뒤 능력과 악마가 정해집니다!", BarColor.RED, BarStyle.SOLID, BarFlag.CREATE_FOG, BarFlag.DARKEN_SKY);
+                KeyedBossBar bar = Bukkit.createBossBar(new NamespacedKey(RHAS.getPlugin(), "delay_timer"), "30초뒤 능력과 악마가 정해집니다!", BarColor.RED, BarStyle.SOLID, BarFlag.CREATE_FOG, BarFlag.DARKEN_SKY);
                 Timer delayTimer = new Timer("delay_timer", bar, 30);
-                Game.this.joinPlayer.forEach(uuid -> {
+                joinPlayer.forEach(uuid -> {
                     Player player = Bukkit.getPlayer(uuid);
-                    player.teleport(Game.this.spawn);
+                    player.teleport(spawn);
                     player.setGameMode(GameMode.ADVENTURE);
                     delayTimer.addPlayer(player);
                 });
@@ -327,13 +286,15 @@ public class Game implements Runnable {
                 sendTitle("§c§l[ §f당신은 §4악마 §f입니다 §c§l]", "§7지금부터 모든 인간들을 죽이세요", murderPlayer);
                 Game.this.survivePlayer.forEach(uuid -> {
                     Player player = Bukkit.getPlayer(uuid);
+                    player.setWalkSpeed(setting.getRunnerSpeed());
                     timer.addPlayer(player);
-                    player.getInventory().addItem(GameItems.RUNNER_WEAPON[new Random().nextInt(GameItems.RUNNER_WEAPON.length)]);
+                    player.getInventory().addItem(RunnerAbility.values()[new Random().nextInt(RunnerAbility.values().length)].itemStack);
                 });
                 Game.this.murderPlayer.forEach(uuid -> {
                     Player player = Bukkit.getPlayer(uuid);
                     timer.addPlayer(player);
-                    player.getInventory().addItem(GameItems.MURDER_WEAPON[new Random().nextInt(GameItems.MURDER_WEAPON.length)]);
+                    player.getInventory().addItem(MurderAbility.values()[new Random().nextInt(MurderAbility.values().length)].itemStack);
+                    player.setWalkSpeed(setting.getMurderSpeed());
                     player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 100, 5));
                     player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 100, 130));
                     player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 100, 5));
